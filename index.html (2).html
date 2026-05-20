@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)file:///C:/Users/%EA%B9%80%EB%8B%A4%EC%98%81/Downloads/hiring-dashboard-final_21.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond Music — 채용 대시보드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Beyond Music — 채용 대시보드__F_files/css2" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --surface3: #e8e7e0;
+  --border: rgba(0,0,0,0.07);
+  --border-md: rgba(0,0,0,0.12);
+  --border-dark: rgba(0,0,0,0.2);
+  --text: #181814;
+  --text2: #5c5c54;
+  --text3: #9c9c90;
+  --accent: #181814;
+  --green: #0a6644; --green-bg: #ddf2e8; --green-mid: #1d9e75;
+  --blue: #1458a0; --blue-bg: #ddeaf8;
+  --purple: #4a3fb0; --purple-bg: #eceafd;
+  --amber: #7a4a08; --amber-bg: #faebd4;
+  --coral: #8c3318; --coral-bg: #fae8e2;
+  --teal: #0f5e5e; --teal-bg: #d4f0ef;
+  --r: 8px; --r-lg: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+/* Shell */
+.shell{display:flex;min-height:100vh}
+/* Sidebar */
+.sidebar{width:216px;background:var(--surface);border-right:1px solid var(--border);padding:0;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.logo-area{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
+.logo-brand{font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;margin-bottom:2px}
+.logo-title{font-size:15px;font-weight:600;color:var(--text)}
+.nav{padding:12px 10px;flex:1}
+.nav-group{margin-bottom:20px}
+.nav-group-label{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;padding:0 10px;margin-bottom:4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r);cursor:pointer;font-size:13px;color:var(--text2);transition:all 0.12s;user-select:none;font-weight:500}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--text);color:#fff}
+.nav-item svg{width:15px;height:15px;flex-shrink:0;stroke-width:1.8}
+.nav-badge{margin-left:auto;font-size:10px;font-family:'DM Mono',monospace;background:var(--surface2);color:var(--text3);border-radius:99px;padding:1px 7px;min-width:20px;text-align:center}
+.nav-item.active .nav-badge{background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.6)}
+.sidebar-bottom{padding:16px 20px;border-top:1px solid var(--border)}
+.sidebar-bottom p{font-size:11px;color:var(--text3);line-height:1.6}
+/* Main */
+.main{flex:1;overflow-y:auto;min-width:0}
+.page-top{padding:28px 28px 0;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.page-heading{display:flex;flex-direction:column;gap:3px}
+.page-title{font-size:18px;font-weight:600}
+.page-sub{font-size:12px;color:var(--text3)}
+.actions{display:flex;gap:8px}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.12s;font-family:inherit;white-space:nowrap}
+.btn:hover{background:var(--surface2)}
+.btn svg{width:14px;height:14px;stroke-width:2}
+.btn-dark{background:var(--text);color:#fff;border-color:var(--text)}
+.btn-dark:hover{background:#333}
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;padding:0 28px 20px;min-width:0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px}
+.stat.accent-green{border-left:3px solid var(--green-mid)}
+.stat.accent-red{border-left:3px solid #c0392b}
+.stat-label{font-size:11px;color:var(--text3);font-weight:500;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+.stat-num{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;line-height:1;margin-bottom:3px}
+.stat-desc{font-size:11px;color:var(--text3)}
+/* Tabs */
+.view-tabs{display:flex;gap:0;padding:0 28px;margin-bottom:18px;border-bottom:1px solid var(--border)}
+.vtab{padding:8px 16px;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.12s}
+.vtab:hover{color:var(--text2)}
+.vtab.active{color:var(--text);border-bottom-color:var(--text)}
+/* Kanban */
+.kanban-wrap{padding:0 28px 28px;overflow-x:auto}
+.kanban{display:grid;grid-template-columns:repeat(6,200px);gap:10px;min-width:1260px}
+.pos-filter{display:flex;gap:6px;flex-wrap:wrap;padding:0 28px;margin-bottom:16px}
+.pos-chip{font-size:12px;padding:5px 14px;border-radius:99px;border:1px solid var(--border-md);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.12s;font-family:inherit;font-weight:500}
+.pos-chip:hover{background:var(--surface2)}
+.pos-chip.on{background:var(--text);color:#fff;border-color:var(--text)}
+.kcol-head{display:flex;align-items:center;justify-content:space-between;padding:0 4px 10px}
+.kcol-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.kcol-count{font-size:10px;font-family:'DM Mono',monospace;background:var(--surface3);color:var(--text3);border-radius:99px;padding:1px 7px}
+.kcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all 0.12s}
+.kcard:hover{border-color:var(--border-dark);transform:translateY(-1px);box-shadow:var(--shadow)}
+.kcard-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.kcard-role{font-size:11px;color:var(--text2);margin-bottom:10px}
+.kcard-foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.kcard-date{margin-left:auto;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
+.kempty{font-size:12px;color:var(--text3);text-align:center;padding:24px 8px;border:1px dashed var(--border-md);border-radius:var(--r-lg)}
+/* Pool */
+.pool-wrap{padding:0 28px 28px}
+.toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.searchbox{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border-md);border-radius:var(--r);padding:7px 12px;flex:1;min-width:200px}
+.searchbox svg{width:14px;height:14px;color:var(--text3);flex-shrink:0;stroke-width:2}
+.searchbox input{border:none;outline:none;font-size:13px;background:transparent;color:var(--text);width:100%;font-family:inherit}
+.searchbox input::placeholder{color:var(--text3)}
+select.fsel{font-size:13px;padding:7px 10px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:inherit;cursor:pointer}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{font-size:11px;padding:4px 11px;border-radius:99px;border:1px solid var(--border-md);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.12s;font-family:inherit;font-weight:500}
+.chip:hover{background:var(--surface2)}
+.chip.on{background:var(--text);color:#fff;border-color:var(--text)}
+/* Table */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10px;font-weight:600;color:var(--text3);text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface2);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--surface2);cursor:pointer}
+/* Tags */
+.tag{display:inline-flex;align-items:center;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500;white-space:nowrap}
+.tag-saramin{background:#fff0e0;color:#8a4a00}
+.tag-jobkorea{background:#e0f0ff;color:#0a4a90}
+.tag-remember{background:#f0e8ff;color:#4a2aa0}
+.tag-headhunter{background:#e8f8f0;color:#0a5a3a}
+.tag-rec{background:#E1F5EE;color:#085041}
+.tag-gray{background:#f0efe9;color:#6b6b65}
+.skill-pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--text2);margin-right:3px;margin-bottom:2px;white-space:nowrap}
+.sbadge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500}
+.s-active{background:var(--green-bg);color:var(--green)}
+.s-hold{background:var(--amber-bg);color:var(--amber)}
+.s-out{background:var(--coral-bg);color:var(--coral)}
+.stage-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500}
+.ava{width:24px;height:24px;border-radius:50%;background:var(--blue-bg);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--blue);flex-shrink:0}
+.resume-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue);text-decoration:none;padding:2px 8px;border-radius:99px;background:var(--blue-bg)}
+.resume-link:hover{opacity:0.8}
+/* Modal */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:16px;padding:28px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.15)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.modal-title{font-size:16px;font-weight:600}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;padding:2px;display:flex;align-items:center;justify-content:center;border-radius:var(--r)}
+.modal-close:hover{background:var(--surface2);color:var(--text)}
+.modal-tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface2);border-radius:var(--r);padding:3px}
+.mtab{flex:1;padding:7px;font-size:12px;font-weight:500;text-align:center;border-radius:6px;cursor:pointer;color:var(--text2);transition:all 0.12s;font-family:inherit;border:none;background:none}
+.mtab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.fgroup{margin-bottom:14px}
+.flabel{font-size:12px;font-weight:500;color:var(--text2);display:block;margin-bottom:5px}
+.finput{width:100%;font-size:13px;padding:9px 12px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:inherit;transition:border-color 0.12s}
+.finput:focus{outline:none;border-color:var(--border-dark)}
+textarea.finput{resize:vertical;min-height:72px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.file-drop{border:1.5px dashed var(--border-dark);border-radius:var(--r);padding:20px;text-align:center;cursor:pointer;transition:all 0.12s;background:var(--surface2)}
+.file-drop:hover{border-color:var(--text2);background:var(--surface3)}
+.file-drop.has-file{border-color:var(--green-mid);background:var(--green-bg)}
+.file-drop svg{width:20px;height:20px;color:var(--text3);margin-bottom:6px;stroke-width:1.5}
+.file-drop p{font-size:12px;color:var(--text2);margin-bottom:3px}
+.file-drop span{font-size:11px;color:var(--text3)}
+.file-drop input{display:none}
+.modal-footer{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+/* Detail panel */
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:200}
+.detail-overlay.open{display:block}
+.detail-panel{position:fixed;right:0;top:0;bottom:0;width:560px;background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;z-index:201;transform:translateX(100%);transition:transform 0.2s ease}
+.detail-overlay.open .detail-panel{transform:translateX(0)}
+.detail-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.detail-body{padding:20px 24px}
+.detail-name{font-size:18px;font-weight:600;margin-bottom:3px}
+.detail-role{font-size:13px;color:var(--text2)}
+.detail-close{background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;flex-shrink:0}
+.dsec{margin-bottom:20px}
+.dsec-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.dsel{width:100%;font-size:13px;padding:8px 10px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:inherit}
+.comment-box{width:100%;font-size:13px;padding:9px 12px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:inherit;resize:vertical;min-height:80px}
+.comment-box:focus{outline:none;border-color:var(--border-dark)}
+.save-row{display:flex;justify-content:flex-end;margin-top:6px}
+</style>
+</head>
+<body><div id="loading-bar" style="position: fixed; top: 0px; left: 0px; right: 0px; background: rgb(24, 24, 20); color: rgb(255, 255, 255); font-size: 12px; text-align: center; padding: 8px; z-index: 9999; display: none;">데이터 불러오는 중...</div>
+<div class="shell">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo-brand">Beyond Music</div>
+    <div class="logo-title">채용 대시보드</div>
+  </div>
+  <nav class="nav">
+    <div class="nav-group">
+      <div class="nav-group-label">채용 현황</div>
+      <div class="nav-item active" onclick="showView(&#39;kanban&#39;,this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="10" rx="1"></rect><rect x="14" y="17" width="7" height="4" rx="1"></rect></svg>
+        칸반 보드
+      </div>
+      <div class="nav-item" onclick="showView(&#39;process&#39;,this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12h6M9 16h6M9 8h6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path></svg>
+        후보자 진행 DB
+        <span class="nav-badge" id="nb-process">5</span>
+      </div>
+      <div class="nav-item" onclick="showView(&#39;jd&#39;,this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        JD 보관
+        <span class="nav-badge" id="nb-jd">4</span>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">인재풀</div>
+      <div class="nav-item" onclick="showView(&#39;pool&#39;,this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="7" r="4"></circle><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path><path d="M16 11a4 4 0 0 1 0-8M21 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+        인재풀 전체
+        <span class="nav-badge" id="nb-pool">3</span>
+      </div>
+    </div>
+  </nav>
+  <div class="sidebar-bottom">
+    <p>Beyond Music<br>People Team</p>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- 칸반 뷰 -->
+  <div id="view-kanban">
+    <div class="page-top">
+      <div class="page-heading">
+        <div class="page-title">채용 현황</div>
+        <div class="page-sub" id="kanban-sub">전체 포지션 · 전형 단계별 현황</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-dark" onclick="openModal(&#39;process&#39;)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+          후보자 추가
+        </button>
+      </div>
+    </div>
+    <div class="stats" id="stats-area"><div class="stat"><div class="stat-label">전체</div><div class="stat-num">5</div><div class="stat-desc">전체</div></div><div class="stat"><div class="stat-label">서류검토 (보류)</div><div class="stat-num">1</div><div class="stat-desc">검토 중</div></div><div class="stat accent-red"><div class="stat-label">서류탈락</div><div class="stat-num">0</div><div class="stat-desc">서류 단계</div></div><div class="stat"><div class="stat-label">1차 인터뷰</div><div class="stat-num">4</div><div class="stat-desc">진행 중</div></div><div class="stat"><div class="stat-label">2차 인터뷰</div><div class="stat-num">0</div><div class="stat-desc">진행 중</div></div><div class="stat accent-green"><div class="stat-label">최종 합격</div><div class="stat-num">0</div><div class="stat-desc">합격</div></div><div class="stat accent-red"><div class="stat-label">불합격</div><div class="stat-num">0</div><div class="stat-desc">인터뷰 단계</div></div></div>
+    <div class="pos-filter" id="pos-filter"><button class="pos-chip on" onclick="setPosFilter(&#39;&#39;,this)">전체 포지션</button><button class="pos-chip" onclick="setPosFilter(&#39;IP Acquisition&#39;,this)">IP Acquisition</button></div>
+    <div class="kanban-wrap"><div class="kanban" id="kanban-board"><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#888780"></span>서류검토 (보류)</div><span class="kcol-count">1</span></div><div class="kcard"><div class="kcard-name">권우진</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-saramin">사람인</span><span class="kcard-date">2026-05-14T15:00:00.000Z</span></div></div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#c0392b"></span>서류탈락</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#378ADD"></span>1차 인터뷰</div><span class="kcol-count">4</span></div><div class="kcard"><div class="kcard-name">김태희</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div><div class="kcard"><div class="kcard-name">이소현</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div><div class="kcard"><div class="kcard-name">양한슬</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div><div class="kcard"><div class="kcard-name">김민혜</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#534AB7"></span>2차 인터뷰</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#1D9E75"></span>최종 합격</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#993c1d"></span>불합격</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div></div></div>
+  </div>
+
+  <!-- 후보자 진행 DB 뷰 -->
+  <div id="view-process" style="display:none">
+    <div class="page-top">
+      <div class="page-heading">
+        <div class="page-title">후보자 진행 DB</div>
+        <div class="page-sub">현재 전형 중인 후보자 관리</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-dark" onclick="openModal(&#39;process&#39;)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+          후보자 추가
+        </button>
+      </div>
+    </div>
+    <div class="pool-wrap">
+      <div class="toolbar">
+        <div class="searchbox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+          <input type="text" id="proc-search" placeholder="이름, 포지션 검색..." oninput="renderProcess()">
+        </div>
+        <select class="fsel" id="proc-stage" onchange="renderProcess()">
+          <option value="">전형 단계 전체</option>
+          <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
+        </select>
+        <select class="fsel" id="proc-src" onchange="renderProcess()">
+          <option value="">소싱채널 전체</option>
+          <option>사람인</option><option>잡코리아</option><option>리멤버</option><option>헤드헌터</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>이름</th><th>포지션</th><th>전형단계</th><th>소싱채널</th><th>면접일정</th><th>이력서</th><th>등록일</th>
+          </tr></thead>
+          <tbody id="proc-tbody"><tr onclick="openDetail(&#39;process&#39;,&#39;1778821769220&#39;)"><td><strong>권우진</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#88878018;color:#888780"><span style="width:6px;height:6px;border-radius:50%;background:#888780;display:inline-block"></span>서류검토</span></td><td><span class="tag tag-saramin">사람인</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://drive.google.com/file/d/1oEcN-NnjjGWJSS-1s3ujWFX6D6rcolNN/view?usp=drive_link" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/14</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180598151&#39;)"><td><strong>김태희</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://docs.google.com/document/d/1kOrSkuKzW_5p2lULFTZrvKQF4UY8w1dt/edit?usp=drive_link&amp;ouid=104689053319304964191&amp;rtpof=true&amp;sd=true" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180741186&#39;)"><td><strong>이소현</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://docs.google.com/document/d/1OkeSF_ynlJjy3pJhrKbccnymTKln1Aty/edit?usp=drive_link&amp;ouid=104689053319304964191&amp;rtpof=true&amp;sd=true" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180889488&#39;)"><td><strong>양한슬</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://drive.google.com/file/d/1L4X-ZO6Hzj5QKGUizxkrxJ8oepqUTzad/view?usp=drive_link" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180947431&#39;)"><td><strong>김민혜</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://drive.google.com/file/d/13Pez9XrT_vCWPC_fd75lTFDxQ2cg5a-h/view?usp=drive_link" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- JD 보관 뷰 -->
+  <div id="view-jd" style="display:none">
+    <div class="page-top">
+      <div class="page-heading">
+        <div class="page-title">JD 보관</div>
+        <div class="page-sub">채용 포지션별 JD 및 공고 포스터 관리</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-dark" onclick="openJDModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px"><path d="M12 5v14M5 12h14"></path></svg>
+          JD 등록
+        </button>
+      </div>
+    </div>
+    <div class="pool-wrap">
+      <div class="toolbar" style="margin-bottom:14px">
+        <select class="fsel" id="jd-pos-filter" onchange="renderJD()"><option value="">포지션 전체</option><option value="IP Acquisition">IP Acquisition</option></select>
+      </div>
+      <div id="jd-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px"><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779260886819&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779260886819&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:4px"><img src="./Beyond Music — 채용 대시보드__F_files/zngfjpf7pev1ax4gzziz.png" style="width:100%;display:block;max-height:180px;object-fit:cover"></div><a href="./Beyond Music — 채용 대시보드__F_files/zngfjpf7pev1ax4gzziz.png" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#EEEDFE;border-radius:var(--r);text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="#4a3fb0" stroke-width="2" style="width:16px;height:16px;flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span style="font-size:13px;font-weight:500;color:#4a3fb0">공고 포스터 보기</span></a><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779261942377&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779261942377&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:4px"><img src="./Beyond Music — 채용 대시보드__F_files/nc8rjaix7mcsa5pbraug.png" style="width:100%;display:block;max-height:180px;object-fit:cover"></div><a href="./Beyond Music — 채용 대시보드__F_files/nc8rjaix7mcsa5pbraug.png" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#EEEDFE;border-radius:var(--r);text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="#4a3fb0" stroke-width="2" style="width:16px;height:16px;flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span style="font-size:13px;font-weight:500;color:#4a3fb0">공고 포스터 보기</span></a><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779262013917&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779262013917&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">공고 포스터 없음</div><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779262086426&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779262086426&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">공고 포스터 없음</div><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div></div>
+    </div>
+  </div>
+  <div id="view-pool" style="display:none">
+    <div class="page-top">
+      <div class="page-heading">
+        <div class="page-title">인재풀</div>
+        <div class="page-sub">탈락/홀드 포함 전체 후보자 마스터</div>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="openModal(&#39;pool&#39;)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+          인재풀 등록
+        </button>
+        <button class="btn btn-dark" onclick="openModal(&#39;process&#39;)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+          후보자 추가
+        </button>
+      </div>
+    </div>
+    <div class="pool-wrap">
+      <div class="toolbar">
+        <div class="searchbox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+          <input type="text" id="pool-search" placeholder="이름, 스킬, 메모 검색..." oninput="renderPool()">
+        </div>
+        <select class="fsel" id="pool-src" onchange="renderPool()">
+          <option value="">소싱채널 전체</option>
+          <option>사람인</option><option>잡코리아</option><option>리멤버</option><option>헤드헌터</option><option>지인소개</option><option>기타</option>
+        </select>
+        <select class="fsel" id="pool-status" onchange="renderPool()">
+          <option value="">상태 전체</option>
+          <option value="서류 검토">서류 검토</option>
+          <option value="1차인터뷰">1차 인터뷰</option>
+          <option value="2차인터뷰">2차 인터뷰</option>
+          <option value="보류">보류</option>
+          <option value="채용불가">채용 불가</option>
+        </select>
+      </div>
+      <div class="chips" id="skill-chips"></div>
+
+      <!-- 등급 기준 아코디언 -->
+      <div style="margin-bottom:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+        <div onclick="toggleGrade()" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none">
+          <span style="font-size:13px;font-weight:500;color:var(--text)">📋 인재 등급 기준</span>
+          <span id="grade-arrow" style="font-size:12px;color:var(--text3)">▼</span>
+        </div>
+        <div id="grade-panel" style="display:none;border-top:1px solid var(--border);padding:16px">
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+            <div style="background:#1D9E7510;border:1px solid #1D9E7530;border-radius:var(--r);padding:12px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                <span style="font-size:16px;font-weight:700;color:#1D9E75">S</span>
+                <span style="font-size:10px;font-weight:600;color:#1D9E75;background:#1D9E7520;padding:2px 7px;border-radius:99px">즉시 채용 대상</span>
+              </div>
+              <p style="font-size:11px;color:var(--text);line-height:1.6">3가지 기준 모두 충족. 높은 보수를 주면서라도 반드시 확보하고 싶은 인재.</p>
+            </div>
+            <div style="background:#378ADD10;border:1px solid #378ADD30;border-radius:var(--r);padding:12px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                <span style="font-size:16px;font-weight:700;color:#378ADD">A</span>
+                <span style="font-size:10px;font-weight:600;color:#378ADD;background:#378ADD20;padding:2px 7px;border-radius:99px">적극 채용 권장</span>
+              </div>
+              <p style="font-size:11px;color:var(--text);line-height:1.6">3가지 기준 모두 충족하나 S 대비 수치가 다소 낮은 인재. 현재 포지션에 바로 투입 가능.</p>
+            </div>
+            <div style="background:#534AB710;border:1px solid #534AB730;border-radius:var(--r);padding:12px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                <span style="font-size:16px;font-weight:700;color:#534AB7">B</span>
+                <span style="font-size:10px;font-weight:600;color:#534AB7;background:#534AB720;padding:2px 7px;border-radius:99px">조건부 채용 검토</span>
+              </div>
+              <p style="font-size:11px;color:var(--text);line-height:1.6">3가지 기준 중 2가지 충족. 포지션이나 타이밍이 맞으면 채용 가능. 홀드 후 재검토 권장.</p>
+            </div>
+            <div style="background:#BA751710;border:1px solid #BA751730;border-radius:var(--r);padding:12px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                <span style="font-size:16px;font-weight:700;color:#BA7517">C</span>
+                <span style="font-size:10px;font-weight:600;color:#BA7517;background:#BA751720;padding:2px 7px;border-radius:99px">인재풀 보관</span>
+              </div>
+              <p style="font-size:11px;color:var(--text);line-height:1.6">기준 1가지 충족 또는 잠재력은 있으나 현재 역량 부족.</p>
+            </div>
+            <div style="background:#99391D10;border:1px solid #99391D30;border-radius:var(--r);padding:12px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+                <span style="font-size:16px;font-weight:700;color:#99391D">D</span>
+                <span style="font-size:10px;font-weight:600;color:#99391D;background:#99391D20;padding:2px 7px;border-radius:99px">채용 어려움</span>
+              </div>
+              <p style="font-size:11px;color:var(--text);line-height:1.6">현재 기준 미충족. Beyond Music의 채용 기준에 부합하지 않아 채용이 어려운 인재.</p>
+            </div>
+          </div>
+          <p style="font-size:11px;color:var(--text);margin-top:10px">* 3가지 기준: Fit (조직 적합성) · Global Mindset (글로벌 관점) · Professionalism (전문성)</p>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>이름</th><th>직군</th><th>인재등급</th><th>스킬</th><th>소싱채널</th><th>상태</th><th>재접촉</th><th>이력서</th><th>메모</th><th>등록일</th>
+          </tr></thead>
+          <tbody id="pool-tbody"><tr onclick="openDetail(&#39;pool&#39;,&#39;1779243177722&#39;)"><td><strong>존한(John Han)</strong></td><td>Music Strategy</td><td><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#eee18;color:#888">D</span></td><td></td><td><span class="tag tag-rec">지인소개</span></td><td><span class="sbadge" style="background:#fae8e2;color:#8c3318">채용 불가</span></td><td style="font-size:12px;font-weight:600;color:var(--text3)">N</td><td><span style="color:var(--text3);font-size:12px">—</span></td><td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">* Spotify쪽 사람들 networking하려고 하다가 찾은 분인데 관련된 피드백 손대표에게 받았어요. Pool에 넣어 놓고 참고하면 좋을 듯요 (안 뽑을 사람도 그 이유를 알아 놓는 차원에서) 
+
+* "유경철 이사는 안면은 있다고 하는데 친분까지 있는 것은 아닌것 같구요, 다만 이 친구와 대학교 동문(토론토)인 다른 Meta 지인이 있어서 그 분 통하면 소개받을 수 있을 것 같습니다.링크드인에 나와있는대로 스포티파이에 입사한지 얼마 안 된 친구인데, 최근에 스포티파이 한국 지사장으로 조인한 분이 업계에서 좀 (안 좋은 쪽으로) 유명한 분이어서, 회사 분위기가 매우 안 좋은가봐요. 최근에 거기 오래 있던 사람들이 이직하거나 이직 준비중이라는 이야기도 들린다고 하니 이 친구 마음도 싱숭생숭하겠죠? 참고하시기 바랍니다.이 친구 개인에 대한 평판은 아주 긍정적이진 않은것 같아요. 교표답다, 약간 4차원이다 이런 표현들이 나오네요.정리하면...소개 목적이라면 목적과 타임라인 주시면 제가 중간에서 세팅해보겠습니다.혹시 이 친구를 '영입'하실 목적이라면 좀 더 신중하게 더 알아봐야할 것 같습니다."</td><td style="font-size:11px;color:var(--text3);">05/19</td></tr><tr onclick="openDetail(&#39;pool&#39;,&#39;1779243343514&#39;)"><td><strong>이선정</strong></td><td>Director, YouTube Music in Korea</td><td><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#1D9E7518;color:#1D9E75">S</span></td><td><span class="skill-pill">고문</span></td><td><span class="tag tag-rec">지인소개</span></td><td><span class="sbadge" style="background:#faebd4;color:#7a4a08">보류</span></td><td style="font-size:12px;font-weight:600;color:var(--green)">Y</td><td><span style="color:var(--text3);font-size:12px">—</span></td><td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[메모/대표님 의견]
+"제 BCG후배이자, 저희 YT 파트너쉽 수립에 있어서 그동안 저와 직접 이야기 나눈 상대방이였습니다. 조만간 퇴사 예정이어서, 필요 시 저희 고문직 영입을 고민해 봅시다 (인재 hiring, 외부 파트너쉽에 손대표와 또 다른 결로 도움이 될 듯해서요)"</td><td style="font-size:11px;color:var(--text3);">05/19</td></tr><tr onclick="openDetail(&#39;pool&#39;,&#39;1779243558272&#39;)"><td><strong>최영예</strong></td><td>D/A팀 매니저급</td><td><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#534AB718;color:#534AB7">B</span></td><td><span class="skill-pill">데이터 분석</span><span class="skill-pill">D/A팀</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td><span class="sbadge" style="background:#faebd4;color:#7a4a08">보류</span></td><td style="font-size:12px;font-weight:600;color:var(--green)">Y</td><td><a class="resume-link" href="https://res.cloudinary.com/dv0pgto0r/image/upload/v1779243556/vipjxqzh3trcu85bu7sd.pdf" target="_blank">보기</a></td><td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">* IT 개발팀과 ecommerce팀에서 영어, 일어로 근무.
+* Python과 SQL을 활용한 데이터 추출, 가공, 시각화의 분석.
+* 데이터를 기반으로한 비즈니스 의사결정 서포트</td><td style="font-size:11px;color:var(--text3);">05/19</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- JD 수정 모달 -->
+<div class="overlay" id="jd-edit-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">JD 수정</div>
+      <button class="modal-close" onclick="closeJDEditModal()">✕</button>
+    </div>
+    <input type="hidden" id="jd-edit-id">
+    <div class="fgroup"><label class="flabel">포지션</label>
+      <input class="finput" id="jd-edit-pos" readonly="" style="background:var(--surface2);color:var(--text2)">
+    </div>
+    <div class="fgroup"><label class="flabel">Internal JD 교체 (PDF, Word)</label>
+      <div class="file-drop" id="jd-edit-internal-drop" onclick="document.getElementById(&#39;jd-edit-internal-file&#39;).click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <p id="jd-edit-internal-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 새 파일 업로드</p>
+        <span style="font-size:11px;color:var(--text3)">기존 파일을 교체합니다</span>
+        <input type="file" id="jd-edit-internal-file" accept=".pdf,.doc,.docx" onchange="handleJDEditFile(&#39;internal&#39;)" style="display:none">
+      </div>
+    </div>
+    <div class="fgroup"><label class="flabel">공고 포스터 교체 (이미지)</label>
+      <div class="file-drop" id="jd-edit-poster-drop" onclick="document.getElementById(&#39;jd-edit-poster-file&#39;).click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <p id="jd-edit-poster-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 새 이미지 업로드</p>
+        <span style="font-size:11px;color:var(--text3)">기존 파일을 교체합니다</span>
+        <input type="file" id="jd-edit-poster-file" accept="image/*" onchange="handleJDEditFile(&#39;poster&#39;)" style="display:none">
+      </div>
+      <div id="jd-edit-poster-preview" style="display:none;margin-top:8px"><img id="jd-edit-poster-img" style="width:100%;border-radius:var(--r);border:1px solid var(--border)"></div>
+    </div>
+    <div class="fgroup"><label class="flabel">메모</label><textarea class="finput" id="jd-edit-memo" style="min-height:60px"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeJDEditModal()">취소</button>
+      <button class="btn btn-dark" onclick="updateJD()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- JD 모달 -->
+<div class="overlay" id="jd-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">JD 등록</div>
+      <button class="modal-close" onclick="closeJDModal()">✕</button>
+    </div>
+    <div class="fgroup"><label class="flabel">포지션 *</label>
+      <div style="display:flex;gap:6px">
+        <select class="finput" id="jd-pos" style="flex:1"></select>
+        <button type="button" class="btn" style="padding:7px 10px;flex-shrink:0;font-size:12px" onclick="addNewPosition()" title="포지션 추가">+</button>
+      </div>
+    </div>
+    <div class="fgroup"><label class="flabel">Internal JD (PDF, Word)</label>
+      <div class="file-drop" id="jd-internal-drop" onclick="document.getElementById(&#39;jd-internal-file&#39;).click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <p id="jd-internal-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 파일 업로드</p>
+        <span style="font-size:11px;color:var(--text3)">PDF, DOC, DOCX</span>
+        <input type="file" id="jd-internal-file" accept=".pdf,.doc,.docx" onchange="handleJDFile(&#39;internal&#39;)" style="display:none">
+      </div>
+    </div>
+    <div class="fgroup"><label class="flabel">공고 포스터 (이미지)</label>
+      <div class="file-drop" id="jd-poster-drop" onclick="document.getElementById(&#39;jd-poster-file&#39;).click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <p id="jd-poster-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 이미지 업로드</p>
+        <span style="font-size:11px;color:var(--text3)">JPG, PNG, GIF</span>
+        <input type="file" id="jd-poster-file" accept="image/*" onchange="handleJDFile(&#39;poster&#39;)" style="display:none">
+      </div>
+      <div id="jd-poster-preview" style="display:none;margin-top:8px"><img id="jd-poster-img" style="width:100%;border-radius:var(--r);border:1px solid var(--border)"></div>
+    </div>
+    <div class="fgroup"><label class="flabel">메모</label><textarea class="finput" id="jd-memo" placeholder="특이사항 등..." style="min-height:60px"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeJDModal()">취소</button>
+      <button class="btn btn-dark" onclick="saveJD()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modal-title">후보자 추가</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="mtab active" id="mtab-process" onclick="switchModalTab(&#39;process&#39;)">후보자 진행 DB</button>
+      <button class="mtab" id="mtab-pool" onclick="switchModalTab(&#39;pool&#39;)">인재풀 등록</button>
+    </div>
+
+    <!-- 후보자 진행 폼 -->
+    <div id="form-process">
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">이름 *</label><input class="finput" id="p-name" placeholder="김지수"></div>
+        <div class="fgroup"><label class="flabel">포지션</label>
+          <div style="display:flex;gap:6px">
+            <select class="finput" id="p-pos" style="flex:1"><option value="IP Acquisition">IP Acquisition</option><option value="전략/투자팀">전략/투자팀</option></select>
+            <button type="button" class="btn" style="padding:7px 10px;flex-shrink:0;font-size:12px" onclick="addNewPosition()" title="포지션 추가">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">소싱채널</label>
+          <select class="finput" id="p-src">
+            <option>사람인</option><option>잡코리아</option><option>리멤버</option><option>헤드헌터</option>
+          </select>
+        </div>
+        <div class="fgroup"><label class="flabel">전형단계</label>
+          <select class="finput" id="p-stage">
+            <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgroup"><label class="flabel">면접 일정</label><input class="finput" type="date" id="p-date"></div>
+      <div class="fgroup"><label class="flabel">이력서 업로드</label>
+        <div class="file-drop" id="p-drop" onclick="document.getElementById(&#39;p-file&#39;).click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <p id="p-file-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 이력서 업로드</p>
+          <span style="font-size:11px;color:var(--text3)">PDF, DOC, DOCX</span>
+          <input type="file" id="p-file" accept=".pdf,.doc,.docx" onchange="handleFile(&#39;p&#39;)" style="display:none">
+        </div>
+      </div>
+      <div class="fgroup"><label class="flabel">또는 링크 직접 입력</label><input class="finput" id="p-resume" placeholder="구글 드라이브 링크 붙여넣기"></div>
+      <div class="fgroup"><label class="flabel">LinkedIn 링크</label><input class="finput" id="p-linkedin" placeholder="https://linkedin.com/in/..."></div>
+      <div class="fgroup"><label class="flabel">코멘트</label><textarea class="finput" id="p-comment" placeholder="면접 피드백, 특이사항 등..."></textarea></div>
+    </div>
+
+    <!-- 인재풀 폼 -->
+    <div id="form-pool" style="display:none">
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">이름 *</label><input class="finput" id="l-name" placeholder="김지수"></div>
+        <div class="fgroup"><label class="flabel">직군</label><input class="finput" id="l-role" placeholder="마케팅 매니저"></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">소싱채널</label>
+          <select class="finput" id="l-src">
+            <option>사람인</option><option>잡코리아</option><option>리멤버</option><option>헤드헌터</option><option>지인소개</option><option>기타</option>
+          </select>
+        </div>
+        <div class="fgroup"><label class="flabel">재접촉 여부</label>
+          <select class="finput" id="l-recontact">
+            <option value="N">N</option><option value="Y">Y</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgroup"><label class="flabel">스킬 태그 (쉼표 구분)</label><input class="finput" id="l-skills" placeholder="마케팅, B2B, 영어, 기획"></div>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">강점</label><input class="finput" id="l-strength" placeholder="커뮤니케이션, 데이터 분석"></div>
+        <div class="fgroup"><label class="flabel">약점</label><input class="finput" id="l-weakness" placeholder="영어 약함"></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label class="flabel">연봉수준</label><input class="finput" id="l-salary" placeholder="5000~6000만원"></div>
+        <div class="fgroup"><label class="flabel">역할</label><input class="finput" id="l-position" placeholder="Individual Contributor"></div>
+      </div>
+      <div class="fgroup"><label class="flabel">인재등급</label>
+        <select class="finput" id="l-grade">
+          <option value="">선택</option>
+          <option>S</option><option>A</option><option>B</option><option>C</option><option>D</option>
+        </select>
+      </div>
+      <div class="fgroup"><label class="flabel">이력서 업로드</label>
+        <div class="file-drop" id="l-drop" onclick="document.getElementById(&#39;l-file&#39;).click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <p id="l-file-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 이력서 업로드</p>
+          <span style="font-size:11px;color:var(--text3)">PDF, DOC, DOCX</span>
+          <input type="file" id="l-file" accept=".pdf,.doc,.docx" onchange="handleFile(&#39;l&#39;)" style="display:none">
+        </div>
+      </div>
+      <div class="fgroup"><label class="flabel">또는 링크 직접 입력</label><input class="finput" id="l-resume" placeholder="구글 드라이브 링크 붙여넣기"></div>
+      <div class="fgroup"><label class="flabel">LinkedIn 링크</label><input class="finput" id="l-linkedin" placeholder="https://linkedin.com/in/..."></div>
+      <div class="fgroup"><label class="flabel">메모</label><textarea class="finput" id="l-memo" placeholder="첫인상, 특이사항, 강점 등..."></textarea></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal()">취소</button>
+      <button class="btn btn-dark" onclick="saveEntry()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detail overlay -->
+<div class="detail-overlay" id="detail-overlay" onclick="closeDetail(event)">
+  <div class="detail-panel" id="detail-panel">
+    <div class="detail-head">
+      <div>
+        <div class="detail-name" id="d-name"></div>
+        <div class="detail-role" id="d-role"></div>
+      </div>
+      <button class="detail-close" onclick="closeDetailDirect()">✕</button>
+    </div>
+    <div class="detail-body" id="d-body"></div>
+  </div>
+</div>
+
+<script>
+const STAGES = ['서류검토','서류탈락','1차 인터뷰','2차 인터뷰','최종 합격','불합격'];
+const STAGE_LABELS = {'서류검토':'서류검토 (보류)','서류탈락':'서류탈락','1차 인터뷰':'1차 인터뷰','2차 인터뷰':'2차 인터뷰','최종 합격':'최종 합격','불합격':'불합격'};
+const STAGE_COLORS = {'서류검토':'#888780','서류탈락':'#c0392b','1차 인터뷰':'#378ADD','2차 인터뷰':'#534AB7','최종 합격':'#1D9E75','불합격':'#993c1d'};
+const SRC_CLASS = {'사람인':'tag-saramin','잡코리아':'tag-jobkorea','리멤버':'tag-remember','헤드헌터':'tag-headhunter','지인소개':'tag-rec','기타':'tag-gray'};
+const API = 'https://script.google.com/macros/s/AKfycby3AhKiEQHawkscHwobliRVQUX3wA06hOtapWBXzioqn48YCZI2IeDIQaJmMp629S6j/exec';
+const CLOUDINARY_CLOUD = 'dv0pgto0r';
+const CLOUDINARY_UPLOAD_PRESET = 'bm_resumes';
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/auto/upload';
+
+let processList = [];
+let poolList = [];
+let activeSkills = new Set();
+let currentModalTab = 'process';
+let activePos = '';
+
+function apiGet(type){return fetch(API+'?action=get&type='+type,{redirect:'follow'}).then(function(r){return r.json();});}
+function apiPost(action,type,data){return fetch(API,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:action,type:type,data:data})}).then(function(r){return r.json();});}
+
+function showLoading(msg){
+  var el=document.getElementById('loading-bar');
+  if(!el){el=document.createElement('div');el.id='loading-bar';el.style.cssText='position:fixed;top:0;left:0;right:0;background:#181814;color:#fff;font-size:12px;text-align:center;padding:8px;z-index:9999;';document.body.prepend(el);}
+  el.textContent=msg;el.style.display='block';
+}
+function hideLoading(){var el=document.getElementById('loading-bar');if(el)el.style.display='none';}
+
+async function loadAll(){
+  showLoading('데이터 불러오는 중...');
+  try {
+    var results = await Promise.all([apiGet('process'),apiGet('pool'),apiGet('jd')]);
+    var p = results[0], l = results[1], j = results[2];
+    processList = p.map(function(r){return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:r['면접일정']||'',resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',imemo:r['평가메모']||'',date:r['등록일']||''};});
+    poolList = l.map(function(r){return {id:String(r['ID']),name:r['이름']||'',role:r['직군']||'',skills:r['스킬태그']?String(r['스킬태그']).split(',').map(function(s){return s.trim();}).filter(Boolean):[],strength:r['강점']||'',weakness:r['약점']||'',salary:r['연봉수준']||'',position:r['역할']||'',grade:r['인재등급']||'',src:r['소싱채널']||'',status:r['상태']||'active',recontact:r['재접촉']||'N',resume:r['이력서링크']||'',memo:r['메모']||'',linkedin:r['LinkedIn']||'',date:r['등록일']||''};});
+    jdList = j.map(function(r){return {id:String(r['ID']),pos:r['포지션']||'',internal:r['Internal_JD']||'',poster:r['공고포스터']||'',date:r['등록일']||'',memo:r['메모']||''};});
+    document.getElementById('nb-jd').textContent=jdList.length;
+    renderAll();
+  } catch(e) {
+    showLoading('데이터 로드 실패. 페이지를 새로고침 해주세요.');
+    return;
+  }
+  hideLoading();
+  loadPositions();
+  renderPositionSelect();
+}
+
+function srcTag(s){return '<span class="tag '+(SRC_CLASS[s]||'tag-saramin')+'">'+s+'</span>';}
+function stageBadge(s){var c=STAGE_COLORS[s]||'#888';return '<span class="stage-badge" style="background:'+c+'18;color:'+c+'"><span style="width:6px;height:6px;border-radius:50%;background:'+c+';display:inline-block"></span>'+s+'</span>';}
+function statusBadge(p){
+  if(p==='서류 검토') return '<span class="sbadge" style="background:#f0efe9;color:#5c5c54">서류검토</span>';
+  if(p==='1차인터뷰') return '<span class="sbadge" style="background:#ddeaf8;color:#1458a0">1차 인터뷰</span>';
+  if(p==='2차인터뷰') return '<span class="sbadge" style="background:#eceafd;color:#4a3fb0">2차 인터뷰</span>';
+  if(p==='보류') return '<span class="sbadge" style="background:#faebd4;color:#7a4a08">보류</span>';
+  if(p==='채용불가') return '<span class="sbadge" style="background:#fae8e2;color:#8c3318">채용 불가</span>';
+  return '<span class="sbadge" style="background:#f0efe9;color:#5c5c54">'+(p||'미설정')+'</span>';
+}
+function resumeBtn(r){if(!r)return '<span style="color:var(--text3);font-size:12px">—</span>';return '<a class="resume-link" href="'+r+'" target="_blank">보기</a>';}
+function today(){var d=new Date();return String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0');}
+
+function renderStats(){
+  var filtered=activePos?processList.filter(function(c){return c.pos===activePos;}):processList;
+  var total=filtered.length;
+  var s1=filtered.filter(function(c){return c.stage==='서류검토';}).length;
+  var s2=filtered.filter(function(c){return c.stage==='서류탈락';}).length;
+  var s3=filtered.filter(function(c){return c.stage==='1차 인터뷰';}).length;
+  var s4=filtered.filter(function(c){return c.stage==='2차 인터뷰';}).length;
+  var s5=filtered.filter(function(c){return c.stage==='최종 합격';}).length;
+  var s6=filtered.filter(function(c){return c.stage==='불합격';}).length;
+  var s7=filtered.filter(function(c){return c.stage==='보류';}).length;
+  var label=activePos||'전체';
+  document.getElementById('stats-area').innerHTML=
+    '<div class="stat"><div class="stat-label">전체</div><div class="stat-num">'+total+'</div><div class="stat-desc">'+label+'</div></div>'+
+    '<div class="stat"><div class="stat-label">서류검토 (보류)</div><div class="stat-num">'+s1+'</div><div class="stat-desc">검토 중</div></div>'+
+    '<div class="stat accent-red"><div class="stat-label">서류탈락</div><div class="stat-num">'+s2+'</div><div class="stat-desc">서류 단계</div></div>'+
+    '<div class="stat"><div class="stat-label">1차 인터뷰</div><div class="stat-num">'+s3+'</div><div class="stat-desc">진행 중</div></div>'+
+    '<div class="stat"><div class="stat-label">2차 인터뷰</div><div class="stat-num">'+s4+'</div><div class="stat-desc">진행 중</div></div>'+
+    '<div class="stat accent-green"><div class="stat-label">최종 합격</div><div class="stat-num">'+s5+'</div><div class="stat-desc">합격</div></div>'+
+    '<div class="stat accent-red"><div class="stat-label">불합격</div><div class="stat-num">'+s6+'</div><div class="stat-desc">인터뷰 단계</div></div>';
+  document.getElementById('nb-process').textContent=processList.length;
+  document.getElementById('nb-pool').textContent=poolList.length;
+}
+
+function renderPosFilter(){
+  var positions=[...new Set(processList.map(function(c){return c.pos;}))];
+  var wrap=document.getElementById('pos-filter');
+  wrap.innerHTML='<button class="pos-chip'+(activePos===''?' on':'')+'" onclick="setPosFilter(\'\',this)">전체 포지션</button>'+
+    positions.map(function(p){return '<button class="pos-chip'+(activePos===p?' on':'')+'" onclick="setPosFilter(\''+p+'\',this)">'+p+'</button>';}).join('');
+}
+
+function setPosFilter(pos,el){
+  activePos=pos;
+  document.querySelectorAll('.pos-chip').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  var sub=document.getElementById('kanban-sub');
+  if(sub)sub.textContent=pos?pos+' · 전형 단계별 현황':'전체 포지션 · 전형 단계별 현황';
+  renderStats();renderKanban();
+}
+
+function renderKanban(){
+  var board=document.getElementById('kanban-board');
+  board.innerHTML='';
+  STAGES.forEach(function(stage){
+    var cols=processList.filter(function(c){return c.stage===stage&&(!activePos||c.pos===activePos);});
+    var col=document.createElement('div');
+    var color=STAGE_COLORS[stage];
+    col.innerHTML='<div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:'+color+'"></span>'+(STAGE_LABELS[stage]||stage)+'</div><span class="kcol-count">'+cols.length+'</span></div>';
+    if(!cols.length){col.innerHTML+='<div class="kempty">없음</div>';}
+    cols.forEach(function(c){
+      var d=document.createElement('div');
+      d.className='kcard';
+      d.onclick=function(){openDetail('process',c.id);};
+      d.innerHTML='<div class="kcard-name">'+c.name+'</div><div class="kcard-role">'+c.pos+'</div><div class="kcard-foot">'+srcTag(c.src)+'<span class="kcard-date">'+c.date+'</span></div>';
+      col.appendChild(d);
+    });
+    board.appendChild(col);
+  });
+}
+
+function renderProcess(){
+  var q=(document.getElementById('proc-search').value||'').toLowerCase();
+  var sf=document.getElementById('proc-stage').value;
+  var srcf=document.getElementById('proc-src').value;
+  var rows=processList.filter(function(c){
+    return (!q||c.name.toLowerCase().includes(q)||c.pos.toLowerCase().includes(q))&&(!sf||c.stage===sf)&&(!srcf||c.src===srcf);
+  });
+  document.getElementById('proc-tbody').innerHTML=rows.map(function(c){
+    var dateStr=c.date?c.date.toString().substring(0,10):'—';
+    if(dateStr.includes('-')){var dp=dateStr.split('-');dateStr=dp[1]+'/'+dp[2];}
+    return '<tr onclick="openDetail(\'process\',\''+c.id+'\')">'+
+      '<td><strong>'+c.name+'</strong></td><td style="color:var(--text2)">'+c.pos+'</td>'+
+      '<td>'+stageBadge(c.stage)+'</td><td>'+srcTag(c.src)+'</td>'+
+      '<td style="font-size:12px;color:var(--text2);">'+(c.idate||'—')+'</td>'+
+      '<td>'+resumeBtn(c.resume)+'</td>'+
+      '<td style="font-size:11px;color:var(--text3);">'+dateStr+'</td></tr>';
+  }).join('');
+}
+
+function renderSkillChips(){
+  var all=[...new Set(poolList.flatMap(function(c){return c.skills;}))];
+  document.getElementById('skill-chips').innerHTML='<button class="chip on" onclick="clearSkills(this)">전체</button>'+
+    all.map(function(s){return '<button class="chip'+(activeSkills.has(s)?' on':'')+'" onclick="toggleSkill(\''+s+'\',this)">'+s+'</button>';}).join('');
+}
+function clearSkills(el){activeSkills.clear();document.querySelectorAll('#skill-chips .chip').forEach(function(b){b.classList.remove('on');});el.classList.add('on');renderPool();}
+function toggleSkill(s,el){document.querySelector('#skill-chips .chip').classList.remove('on');activeSkills.has(s)?activeSkills.delete(s):activeSkills.add(s);el.classList.toggle('on');renderPool();}
+
+function renderPool(){
+  var q=(document.getElementById('pool-search').value||'').toLowerCase();
+  var srcf=document.getElementById('pool-src').value;
+  var stf=document.getElementById('pool-status').value;
+  var rows=poolList.filter(function(c){
+    return (!q||c.name.toLowerCase().includes(q)||c.skills.join(' ').toLowerCase().includes(q)||(c.memo||'').toLowerCase().includes(q))&&
+           (!srcf||c.src===srcf)&&(!stf||c.status===stf)&&
+           (activeSkills.size===0||c.skills.some(function(s){return activeSkills.has(s);}));
+  });
+  document.getElementById('pool-tbody').innerHTML=rows.map(function(c){
+    var gradeColor={'S':'#1D9E75','A':'#378ADD','B':'#534AB7','C':'#888780'};
+    var grade=c.grade?'<span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:'+(gradeColor[c.grade]||'#eee')+'18;color:'+(gradeColor[c.grade]||'#888')+'">'+c.grade+'</span>':'—';
+    var dateStr=c.date?c.date.toString().replace('T',' ').substring(0,10):'—';
+    if(dateStr.includes('-')){var dp=dateStr.split('-');dateStr=dp[1]+'/'+dp[2];}
+    return '<tr onclick="openDetail(\'pool\',\''+c.id+'\')">'+
+      '<td><strong>'+c.name+'</strong></td>'+
+      '<td>'+c.role+'</td>'+
+      '<td>'+grade+'</td>'+
+      '<td>'+c.skills.map(function(s){return '<span class="skill-pill">'+s+'</span>';}).join('')+'</td>'+
+      '<td>'+srcTag(c.src)+'</td>'+
+      '<td>'+statusBadge(c.status)+'</td>'+
+      '<td style="font-size:12px;font-weight:600;color:'+(c.recontact==='Y'?'var(--green)':'var(--text3)')+'">'+c.recontact+'</td>'+
+      '<td>'+resumeBtn(c.resume)+'</td>'+
+      '<td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(c.memo||'—')+'</td>'+
+      '<td style="font-size:11px;color:var(--text3);">'+dateStr+'</td></tr>';
+  }).join('');
+}
+
+function showView(v,el){
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
+  el.classList.add('active');
+  ['kanban','process','pool','jd'].forEach(function(k){document.getElementById('view-'+k).style.display=k===v?'block':'none';});
+  if(v==='process')renderProcess();
+  if(v==='pool'){renderSkillChips();renderPool();}
+  if(v==='jd'){renderJDPosFilter();renderJD();}
+}
+
+function openModal(tab){currentModalTab=tab;switchModalTab(tab);document.getElementById('add-modal').classList.add('open');}
+function closeModal(){document.getElementById('add-modal').classList.remove('open');}
+function switchModalTab(tab){
+  currentModalTab=tab;
+  document.getElementById('form-process').style.display=tab==='process'?'block':'none';
+  document.getElementById('form-pool').style.display=tab==='pool'?'block':'none';
+  document.getElementById('mtab-process').classList.toggle('active',tab==='process');
+  document.getElementById('mtab-pool').classList.toggle('active',tab==='pool');
+}
+function handleFile(prefix){
+  var file=document.getElementById(prefix+'-file').files[0];
+  if(!file)return;
+  document.getElementById(prefix+'-file-name').textContent=file.name;
+  document.getElementById(prefix+'-drop').classList.add('has-file');
+}
+
+async function uploadToCloudinary(file){
+  var formData=new FormData();
+  formData.append('file',file);
+  formData.append('upload_preset','bm_resumes');
+  var isImage=file.type.startsWith('image/');
+  var uploadUrl='https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/'+(isImage?'image':'raw')+'/upload';
+  var res=await fetch(uploadUrl,{method:'POST',body:formData});
+  var data=await res.json();
+  if(data.secure_url) return data.secure_url;
+  throw new Error('업로드 실패: '+(data.error&&data.error.message||''));
+}
+
+async function saveEntry(){
+  if(currentModalTab==='process'){
+    var name=document.getElementById('p-name').value.trim();
+    if(!name){alert('이름을 입력해주세요');return;}
+    var resumeLink=document.getElementById('p-resume').value.trim();
+    var fileEl=document.getElementById('p-file');
+    if(fileEl.files[0]){
+      showLoading('이력서 업로드 중...');
+      try{resumeLink=await uploadToCloudinary(fileEl.files[0]);}catch(e){alert('이력서 업로드 실패. 링크를 직접 입력해주세요.');}
+    }
+    showLoading('저장 중...');
+    await apiPost('add','process',{'이름':name,'포지션':document.getElementById('p-pos').value,'소싱채널':document.getElementById('p-src').value,'전형단계':document.getElementById('p-stage').value,'면접일정':document.getElementById('p-date').value,'이력서링크':resumeLink,'코멘트':document.getElementById('p-comment').value.trim(),'등록일':today(),'LinkedIn':document.getElementById('p-linkedin').value.trim()});
+    ['p-name','p-pos','p-comment','p-resume','p-linkedin'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('p-date').value='';
+    document.getElementById('p-file-name').textContent='클릭하여 이력서 업로드';
+    document.getElementById('p-drop').classList.remove('has-file');
+    fileEl.value='';
+  } else {
+    var name=document.getElementById('l-name').value.trim();
+    if(!name){alert('이름을 입력해주세요');return;}
+    var resumeLink=document.getElementById('l-resume').value.trim();
+    var fileEl=document.getElementById('l-file');
+    if(fileEl.files[0]){
+      showLoading('이력서 업로드 중...');
+      try{resumeLink=await uploadToCloudinary(fileEl.files[0]);}catch(e){alert('이력서 업로드 실패. 링크를 직접 입력해주세요.');}
+    }
+    showLoading('저장 중...');
+    var skills=document.getElementById('l-skills').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+    await apiPost('add','pool',{'이름':name,'직군':document.getElementById('l-role').value.trim(),'스킬태그':skills.join(','),'강점':document.getElementById('l-strength').value.trim(),'약점':document.getElementById('l-weakness').value.trim(),'연봉수준':document.getElementById('l-salary').value.trim(),'역할':document.getElementById('l-position').value.trim(),'인재등급':document.getElementById('l-grade').value,'소싱채널':document.getElementById('l-src').value,'상태':'active','재접촉':document.getElementById('l-recontact').value,'이력서링크':resumeLink,'메모':document.getElementById('l-memo').value.trim(),'등록일':today(),'LinkedIn':document.getElementById('l-linkedin').value.trim()});
+    ['l-name','l-role','l-skills','l-memo','l-resume','l-strength','l-weakness','l-salary','l-position','l-linkedin'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('l-grade').value='';
+    document.getElementById('l-file-name').textContent='클릭하여 이력서 업로드';
+    document.getElementById('l-drop').classList.remove('has-file');
+    fileEl.value='';
+  }
+  closeModal();
+  await loadAll();
+}
+
+function openDetail(type,id){
+  var list=type==='process'?processList:poolList;
+  var c=list.find(function(x){return String(x.id)===String(id);});
+  if(!c)return;
+  document.getElementById('d-name').textContent=c.name;
+  document.getElementById('d-role').textContent=type==='process'?c.pos:c.role;
+  var srcOptions=['사람인','잡코리아','리멤버','헤드헌터','지인소개','기타'];
+  var srcSelect='<select class="dsel" onchange="updateField(\''+type+'\',\''+id+'\',\'src\',this.value)">'+srcOptions.map(function(s){return '<option'+(c.src===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select>';
+  var html='';
+  if(type==='process'){
+    html+='<div class="dsec"><div class="dsec-label">전형 단계</div><select class="dsel" onchange="updateField(\'process\',\''+id+'\',\'stage\',this.value)">'+STAGES.map(function(s){return '<option value="'+s+'"'+(c.stage===s?' selected':'')+'>'+(STAGE_LABELS[s]||s)+'</option>';}).join('')+'</select></div>';
+    html+='<div class="dsec"><div class="dsec-label">소싱채널</div>'+srcSelect+'</div>';
+    html+='<div class="dsec"><div class="dsec-label">면접 일정</div><input type="date" class="dsel" value="'+(c.idate||'')+'" onchange="updateField(\'process\',\''+id+'\',\'idate\',this.value)"></div>';
+    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1"></div><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'process\',\''+id+'\',\'resume\')">'+(c.resume?'링크 수정':'링크 저장')+'</button>'+(c.resume?' &nbsp;<a class="resume-link" href="'+c.resume+'" target="_blank">보기</a>':'')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
+    html+='<div class="dsec"><div class="dsec-label">코멘트</div><textarea class="comment-box" id="detail-comment">'+(c.comment||'')+'</textarea><div class="save-row"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'process\',\''+id+'\',\'comment\')">저장</button></div></div>';
+
+    // 인터뷰 평가
+    html+='<div class="dsec" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px">';
+    html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div class="dsec-label" style="margin-bottom:0">⭐ 인터뷰 평가</div></div>';
+    html+='<div class="frow" style="margin-bottom:12px"><div class="fgroup"><label class="flabel">평가 유형</label><select class="dsel" id="eval-type" onchange="switchEvalType(\''+id+'\')" style="width:100%"><option value=""'+(c.itype===''?' selected':'')+'>선택</option><option value="구성원"'+(c.itype==='구성원'?' selected':'')+'>구성원</option><option value="리더"'+(c.itype==='리더'?' selected':'')+'>리더</option></select></div></div>';
+
+    // 구성원 항목
+    html+='<div id="eval-member" style="display:'+(c.itype==='구성원'?'block':'none')+'">';
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">';
+    ['전문성','문제해결능력','셀프리더십','협업','CultureFit'].forEach(function(item,i){
+      var fieldKey=['s1','s2','s3','s6','s7'][i];
+      var val=c[fieldKey]||1;
+      html+='<div style="background:var(--bg);border-radius:var(--r);padding:10px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;font-weight:500;color:var(--text2)">'+item+'</span><span style="font-size:13px;font-weight:700;color:#378ADD" id="lbl-m-'+fieldKey+'">'+val+'</span></div>';
+      html+='<input type="range" min="1" max="5" step="0.5" value="'+val+'" style="width:100%;accent-color:#378ADD" oninput="document.getElementById(\'lbl-m-'+fieldKey+'\').textContent=this.value" onchange="setScore(\''+id+'\',\''+fieldKey+'\',parseFloat(this.value),\'member\')"></div>';
+    });
+    html+='</div></div>';
+
+    // 리더 항목
+    html+='<div id="eval-leader" style="display:'+(c.itype==='리더'?'block':'none')+'">';
+    html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">';
+    ['전문성','전략적사고','팀리딩','협업','CultureFit'].forEach(function(item,i){
+      var fieldKey=['s1','s4','s5','s6','s7'][i];
+      var val=c[fieldKey]||1;
+      html+='<div style="background:var(--bg);border-radius:var(--r);padding:10px"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;font-weight:500;color:var(--text2)">'+item+'</span><span style="font-size:13px;font-weight:700;color:#534AB7" id="lbl-l-'+fieldKey+'">'+val+'</span></div>';
+      html+='<input type="range" min="1" max="5" step="0.5" value="'+val+'" style="width:100%;accent-color:#534AB7" oninput="document.getElementById(\'lbl-l-'+fieldKey+'\').textContent=this.value" onchange="setScore(\''+id+'\',\''+fieldKey+'\',parseFloat(this.value),\'leader\')"></div>';
+    });
+    html+='</div></div>';
+
+    // 종합점수
+    var scoreVal=c.score||'—';
+    html+='<div style="background:var(--bg);border-radius:var(--r);padding:12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;font-weight:500;color:var(--text)">종합 가중 점수</span><span style="font-size:20px;font-weight:700;color:#378ADD">'+scoreVal+'<span style="font-size:12px;color:var(--text3);font-weight:400"> / 5.0</span></span></div>';
+    html+='<div><label class="flabel" style="font-size:11px;color:var(--text2);margin-bottom:5px;display:block">평가 메모</label><textarea class="comment-box" id="eval-memo" style="min-height:60px">'+(c.imemo||'')+'</textarea><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveEvalMemo(\''+id+'\')">메모 저장</button></div></div>';
+    html+='</div>';
+    html+='<div class="dsec" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="dsec-label" style="margin-bottom:0">📋 Activity Log</div></div>';
+    var logs=[];
+    try{if(c.log)logs=JSON.parse(c.log);}catch(e){}
+    html+='<div id="activity-log-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">';
+    if(logs.length===0){html+='<div style="font-size:12px;color:var(--text3);text-align:center;padding:12px">아직 활동 기록이 없어요</div>';}
+    logs.forEach(function(l,i){
+      html+='<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--bg);border-radius:var(--r);border:1px solid var(--border)">'+
+        '<div style="flex-shrink:0;margin-top:2px"><div style="width:8px;height:8px;border-radius:50%;background:var(--blue)"></div></div>'+
+        '<div style="flex:1;min-width:0"><div style="font-size:11px;color:var(--text3);margin-bottom:3px">'+l.date+'</div>'+
+        '<div style="font-size:13px;color:var(--text)">'+l.text+'</div></div>'+
+        '<button onclick="deleteLog(\''+id+'\','+i+')" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0;flex-shrink:0">×</button>'+
+      '</div>';
+    });
+    html+='</div>';
+    html+='<div style="display:flex;gap:6px"><input type="text" id="log-input" class="dsel" placeholder="예: 1차 인터뷰 안내 메일 발송" style="flex:1"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px;flex-shrink:0" onclick="addLog(\''+id+'\')">추가</button></div></div>';
+  } else {
+    html+='<div class="dsec"><div class="dsec-label">상태</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'status\',this.value)"><option value="서류검토"'+(c.status==='서류 검토'?' selected':'')+'>서류검토</option><option value="1차인터뷰"'+(c.status==='1차인터뷰'?' selected':'')+'>1차 인터뷰</option><option value="2차인터뷰"'+(c.status==='2차인터뷰'?' selected':'')+'>2차 인터뷰</option><option value="보류"'+(c.status==='보류'?' selected':'')+'>보류</option><option value="채용불가"'+(c.status==='채용불가'?' selected':'')+'>채용 불가</option></select></div>';
+    html+='<div class="dsec"><div class="dsec-label">인재등급</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'grade\',this.value)"><option value=""'+(c.grade===''?' selected':'')+'>선택</option><option value="S"'+(c.grade==='S'?' selected':'')+'>S</option><option value="A"'+(c.grade==='A'?' selected':'')+'>A</option><option value="B"'+(c.grade==='B'?' selected':'')+'>B</option><option value="C"'+(c.grade==='C'?' selected':'')+'>C</option><option value="D"'+(c.grade==='D'?' selected':'')+'>D</option></select></div>';
+    html+='<div class="dsec"><div class="dsec-label">소싱채널</div>'+srcSelect+'</div>';
+    html+='<div class="dsec"><div class="dsec-label">스킬</div><div>'+c.skills.map(function(s){return '<span class="skill-pill">'+s+'</span>';}).join('')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">강점</div><input type="text" class="dsel" id="detail-strength" value="'+(c.strength||'')+'" placeholder="강점 입력"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'strength\',\'detail-strength\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">약점</div><input type="text" class="dsel" id="detail-weakness" value="'+(c.weakness||'')+'" placeholder="약점 입력"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'weakness\',\'detail-weakness\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">연봉수준</div><input type="text" class="dsel" id="detail-salary" value="'+(c.salary||'')+'" placeholder="예: 5000~6000만원"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'salary\',\'detail-salary\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">역할</div><input type="text" class="dsel" id="detail-position" value="'+(c.position||'')+'" placeholder="예: Individual Contributor"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'position\',\'detail-position\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">재접촉 여부</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'recontact\',this.value)"><option value="N"'+(c.recontact==='N'?' selected':'')+'>N</option><option value="Y"'+(c.recontact==='Y'?' selected':'')+'>Y</option></select></div>';
+    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1"></div><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'pool\',\''+id+'\',\'resume\')">'+(c.resume?'링크 수정':'링크 저장')+'</button>'+(c.resume?' &nbsp;<a class="resume-link" href="'+c.resume+'" target="_blank">보기</a>':'')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
+    html+='<div class="dsec"><div class="dsec-label">메모</div><textarea class="comment-box" id="detail-comment">'+(c.memo||'')+'</textarea><div class="save-row"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'pool\',\''+id+'\',\'memo\')">저장</button></div></div>';
+  }
+  html+='<div class="dsec"><div class="dsec-label">등록일</div><span style="font-size:13px;color:var(--text2);">'+c.date+'</span></div>';
+  html+='<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)"><button class="btn" style="width:100%;color:var(--coral);border-color:var(--coral-bg);background:var(--coral-bg);font-size:13px" onclick="deleteEntry(\''+type+'\',\''+id+'\')">🗑 이 후보자 삭제</button></div>';
+  document.getElementById('d-body').innerHTML=html;
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+async function updateField(type,id,field,val){
+  var fieldMap={'stage':'전형단계','idate':'면접일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그'};
+  var data={'ID':id};
+  data[fieldMap[field]||field]=val;
+  showLoading('저장 중...');
+  await apiPost('update',type,data);
+  await loadAll();
+  openDetail(type,id);
+}
+
+async function deleteEntry(type,id){
+  var list=type==='process'?processList:poolList;
+  var c=list.find(function(x){return String(x.id)===String(id);});
+  if(!c)return;
+  var name=type==='process'?c.name:c.name;
+  if(!confirm('"'+name+'" 후보자를 삭제하겠습니까?\n이 작업은 되돌릴 수 없습니다.'))return;
+  showLoading('삭제 중...');
+  await apiPost('delete',type,{'ID':id});
+  closeDetailDirect();
+  await loadAll();
+}
+
+async function saveDetailField(type,id,field){
+  var val;
+  if(field==='resume') val=document.getElementById('detail-resume').value;
+  else val=document.getElementById('detail-comment').value;
+  await updateField(type,id,field,val);
+}
+
+async function saveDetailCustom(type,id,field,elId){
+  var val=document.getElementById(elId).value;
+  await updateField(type,id,field,val);
+}
+
+function closeDetail(e){if(e&&e.target!==document.getElementById('detail-overlay'))return;document.getElementById('detail-overlay').classList.remove('open');}
+function closeDetailDirect(){document.getElementById('detail-overlay').classList.remove('open');}
+
+let jdList = [];
+
+function renderJD(){
+  var posF=document.getElementById('jd-pos-filter').value;
+  var rows=jdList.filter(function(j){return !posF||j.pos===posF;});
+  var grid=document.getElementById('jd-grid');
+  if(!grid)return;
+  if(!rows.length){grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text3);font-size:13px">등록된 JD가 없어요</div>';return;}
+  grid.innerHTML=rows.map(function(j){
+    var posterHtml='';
+    if(j.poster){
+      var ext=j.poster.split('?')[0].toLowerCase();
+      var isImg=ext.match(/\.(jpg|jpeg|png|gif|webp)/) || j.poster.includes('image');
+      if(isImg){
+        posterHtml='<div style="border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:4px"><img src="'+j.poster+'" style="width:100%;display:block;max-height:180px;object-fit:cover"></div>';
+      }
+      posterHtml+='<a href="'+j.poster+'" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#EEEDFE;border-radius:var(--r);text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="#4a3fb0" stroke-width="2" style="width:16px;height:16px;flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span style="font-size:13px;font-weight:500;color:#4a3fb0">공고 포스터 보기</span></a>';
+    } else {
+      posterHtml='<div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">공고 포스터 없음</div>';
+    }
+    var internalHtml=j.internal?
+      '<a href="'+j.internal+'" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--blue-bg);border-radius:var(--r);text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="#1458a0" stroke-width="2" style="width:16px;height:16px;flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span style="font-size:13px;font-weight:500;color:#1458a0">Internal JD 열기</span></a>':
+      '<div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div>';
+    return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">'+
+        '<div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div>'+
+        '<div style="font-size:15px;font-weight:600;color:var(--text)">'+j.pos+'</div></div>'+
+        '<div style="display:flex;gap:6px">'+
+        '<button onclick="openJDEditModal(\''+j.id+'\')" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button>'+
+        '<button onclick="deleteJD(\''+j.id+'\')" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button>'+
+        '</div>'+
+      '</div>'+
+      posterHtml+
+      '<div style="display:flex;flex-direction:column;gap:8px">'+internalHtml+'</div>'+
+      (j.memo?'<div style="font-size:12px;color:var(--text2);border-top:1px solid var(--border);padding-top:10px">'+j.memo+'</div>':'')+
+      '<div style="font-size:11px;color:var(--text3)">'+j.date+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+function renderJDPosFilter(){
+  var positions=[...new Set(jdList.map(function(j){return j.pos;}))];
+  var sel=document.getElementById('jd-pos-filter');
+  if(!sel)return;
+  sel.innerHTML='<option value="">포지션 전체</option>'+positions.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('');
+}
+
+function openJDEditModal(id){
+  var j=jdList.find(function(x){return String(x.id)===String(id);});
+  if(!j)return;
+  document.getElementById('jd-edit-id').value=id;
+  document.getElementById('jd-edit-pos').value=j.pos;
+  document.getElementById('jd-edit-memo').value=j.memo||'';
+  document.getElementById('jd-edit-internal-name').textContent=j.internal?'기존 파일 있음 (교체하려면 클릭)':'클릭하여 새 파일 업로드';
+  document.getElementById('jd-edit-poster-name').textContent=j.poster?'기존 이미지 있음 (교체하려면 클릭)':'클릭하여 새 이미지 업로드';
+  if(j.poster){
+    document.getElementById('jd-edit-poster-img').src=j.poster;
+    document.getElementById('jd-edit-poster-preview').style.display='block';
+  } else {
+    document.getElementById('jd-edit-poster-preview').style.display='none';
+  }
+  document.getElementById('jd-edit-internal-drop').classList.remove('has-file');
+  document.getElementById('jd-edit-poster-drop').classList.remove('has-file');
+  document.getElementById('jd-edit-modal').classList.add('open');
+}
+function closeJDEditModal(){document.getElementById('jd-edit-modal').classList.remove('open');}
+
+function handleJDEditFile(type){
+  var file=document.getElementById('jd-edit-'+type+'-file').files[0];
+  if(!file)return;
+  document.getElementById('jd-edit-'+type+'-name').textContent=file.name;
+  document.getElementById('jd-edit-'+type+'-drop').classList.add('has-file');
+  if(type==='poster'&&file.type.startsWith('image/')){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      document.getElementById('jd-edit-poster-img').src=e.target.result;
+      document.getElementById('jd-edit-poster-preview').style.display='block';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+async function updateJD(){
+  var id=document.getElementById('jd-edit-id').value;
+  var j=jdList.find(function(x){return String(x.id)===String(id);});
+  if(!j)return;
+  var internalLink=j.internal;
+  var posterLink=j.poster;
+  var internalFile=document.getElementById('jd-edit-internal-file').files[0];
+  var posterFile=document.getElementById('jd-edit-poster-file').files[0];
+  if(internalFile){
+    showLoading('Internal JD 업로드 중...');
+    try{internalLink=await uploadToCloudinary(internalFile);}catch(e){alert('업로드 실패');}
+  }
+  if(posterFile){
+    showLoading('공고 포스터 업로드 중...');
+    try{posterLink=await uploadToCloudinary(posterFile);}catch(e){alert('업로드 실패');}
+  }
+  showLoading('저장 중...');
+  await apiPost('update','jd',{'ID':id,'Internal_JD':internalLink,'공고포스터':posterLink,'메모':document.getElementById('jd-edit-memo').value.trim()});
+  closeJDEditModal();
+  await loadAll();
+}
+
+function openJDModal(){
+  renderPositionSelect();
+  var jdSel=document.getElementById('jd-pos');
+  if(jdSel&&document.getElementById('p-pos')){
+    jdSel.innerHTML=document.getElementById('p-pos').innerHTML;
+  }
+  document.getElementById('jd-modal').classList.add('open');
+}
+function closeJDModal(){document.getElementById('jd-modal').classList.remove('open');}
+
+function handleJDFile(type){
+  var file=document.getElementById('jd-'+type+'-file').files[0];
+  if(!file)return;
+  document.getElementById('jd-'+type+'-name').textContent=file.name;
+  document.getElementById('jd-'+type+'-drop').classList.add('has-file');
+  if(type==='poster'&&file.type.startsWith('image/')){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      document.getElementById('jd-poster-img').src=e.target.result;
+      document.getElementById('jd-poster-preview').style.display='block';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+async function saveJD(){
+  var pos=document.getElementById('jd-pos').value;
+  if(!pos){alert('포지션을 선택해주세요');return;}
+  var internalLink='', posterLink='';
+
+  var internalFile=document.getElementById('jd-internal-file').files[0];
+  var posterFile=document.getElementById('jd-poster-file').files[0];
+
+  if(internalFile){
+    showLoading('Internal JD 업로드 중...');
+    try{internalLink=await uploadToCloudinary(internalFile);}catch(e){alert('Internal JD 업로드 실패');}
+  }
+  if(posterFile){
+    showLoading('공고 포스터 업로드 중...');
+    try{posterLink=await uploadToCloudinary(posterFile);}catch(e){alert('공고 포스터 업로드 실패');}
+  }
+
+  showLoading('저장 중...');
+  await apiPost('add','jd',{'포지션':pos,'Internal_JD':internalLink,'공고포스터':posterLink,'등록일':today(),'메모':document.getElementById('jd-memo').value.trim()});
+
+  // 초기화
+  ['jd-internal-name','jd-poster-name'].forEach(function(id){document.getElementById(id).textContent='클릭하여 파일 업로드';});
+  ['jd-internal-drop','jd-poster-drop'].forEach(function(id){document.getElementById(id).classList.remove('has-file');});
+  document.getElementById('jd-poster-preview').style.display='none';
+  document.getElementById('jd-internal-file').value='';
+  document.getElementById('jd-poster-file').value='';
+  document.getElementById('jd-memo').value='';
+  closeJDModal();
+  await loadAll();
+}
+
+async function deleteJD(id){
+  if(!confirm('이 JD를 삭제하겠습니까?'))return;
+  showLoading('삭제 중...');
+  await apiPost('delete','jd',{'ID':id});
+  await loadAll();
+}
+
+// 포지션 관리
+var positions = ['IP Acquisition', '전략/투자팀'];
+function loadPositions(){
+  try{var saved=localStorage.getItem('bm_positions');if(saved)positions=JSON.parse(saved);}catch(e){}
+}
+function savePositions(){
+  try{localStorage.setItem('bm_positions',JSON.stringify(positions));}catch(e){}
+}
+function renderPositionSelect(){
+  var sel=document.getElementById('p-pos');
+  if(!sel)return;
+  sel.innerHTML=positions.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('');
+}
+function addNewPosition(){
+  var name=prompt('추가할 포지션명을 입력해주세요:');
+  if(!name||!name.trim())return;
+  name=name.trim();
+  if(positions.indexOf(name)>=0){alert('이미 존재하는 포지션이에요!');return;}
+  positions.push(name);
+  savePositions();
+  renderPositionSelect();
+  document.getElementById('p-pos').value=name;
+  renderPosFilter();
+}
+
+async function setScore(id,field,val,type){
+  var c=processList.find(function(x){return String(x.id)===String(id);});
+  if(!c)return;
+  c[field]=val;
+  // 종합점수 계산 (각 20%)
+  var memberFields=['s1','s2','s3','s6','s7'];
+  var leaderFields=['s1','s4','s5','s6','s7'];
+  var fields=type==='member'?memberFields:leaderFields;
+  var total=0;var count=0;
+  fields.forEach(function(f){if(c[f]){total+=Number(c[f]);count++;}});
+  var avg=count>0?(total/count).toFixed(1):0;
+  c.score=avg;
+  var fieldMap2={'s1':'전문성','s2':'문제해결능력','s3':'셀프리더십','s4':'전략적사고','s5':'팀리딩','s6':'협업','s7':'CultureFit'};
+  showLoading('저장 중...');
+  var data={'ID':id};
+  data[fieldMap2[field]]=val;
+  data['종합점수']=avg;
+  await apiPost('update','process',data);
+  await loadAll();
+  openDetail('process',id);
+}
+
+async function switchEvalType(id){
+  var val=document.getElementById('eval-type').value;
+  showLoading('저장 중...');
+  await apiPost('update','process',{'ID':id,'인터뷰유형':val});
+  await loadAll();
+  openDetail('process',id);
+}
+
+async function saveEvalMemo(id){
+  var val=document.getElementById('eval-memo').value;
+  showLoading('저장 중...');
+  await apiPost('update','process',{'ID':id,'평가메모':val});
+  await loadAll();
+  openDetail('process',id);
+}
+
+async function addLog(id){
+  var input=document.getElementById('log-input');
+  var text=input.value.trim();
+  if(!text)return;
+  var c=processList.find(function(x){return String(x.id)===String(id);});
+  if(!c)return;
+  var logs=[];
+  try{if(c.log)logs=JSON.parse(c.log);}catch(e){}
+  var now=new Date();
+  var dateStr=now.getFullYear()+'.'+(now.getMonth()+1).toString().padStart(2,'0')+'.'+now.getDate().toString().padStart(2,'0')+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  logs.unshift({date:dateStr,text:text});
+  input.value='';
+  showLoading('저장 중...');
+  await updateField('process',id,'log',JSON.stringify(logs));
+}
+
+async function deleteLog(id,idx){
+  if(!confirm('이 기록을 삭제하겠습니까?'))return;
+  var c=processList.find(function(x){return String(x.id)===String(id);});
+  if(!c)return;
+  var logs=[];
+  try{if(c.log)logs=JSON.parse(c.log);}catch(e){}
+  logs.splice(idx,1);
+  showLoading('저장 중...');
+  await updateField('process',id,'log',JSON.stringify(logs));
+}
+
+function toggleGrade(){
+  var panel=document.getElementById('grade-panel');
+  var arrow=document.getElementById('grade-arrow');
+  if(panel.style.display==='none'){panel.style.display='block';arrow.textContent='▲';}
+  else{panel.style.display='none';arrow.textContent='▼';}
+}
+
+function renderAll(){renderStats();renderPosFilter();renderKanban();renderProcess();renderPool();renderJDPosFilter();renderJD();}
+document.getElementById('add-modal').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal();});
+
+loadAll();
+</script>
+
+
+</body></html>
