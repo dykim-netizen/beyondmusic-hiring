@@ -867,7 +867,9 @@ function openDetail(type,id){
       '</div>';
     });
     html+='</div>';
-    html+='<div style="display:flex;gap:6px"><input type="text" id="log-input" class="dsel" placeholder="예: 1차 인터뷰 안내 메일 발송" style="flex:1"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px;flex-shrink:0" onclick="addLog(\''+id+'\')">추가</button></div></div>';
+    html+='<div style="display:flex;gap:6px"><input type="text" id="log-input" class="dsel" placeholder="예: 1차 인터뷰 안내 메일 발송" style="flex:1"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px;flex-shrink:0" onclick="addLog(\''+id+'\')">추가</button></div>';
+    html+='<div style="font-size:11px;color:var(--text3);margin-top:8px">💡 이메일 발송 시 Log에 자동으로 반영됩니다.</div>';
+    html+='</div>';
   } else {
     html+='<div class="dsec"><div class="dsec-label">상태</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'status\',this.value)"><option value="서류검토"'+(c.status==='서류 검토'?' selected':'')+'>서류검토</option><option value="1차인터뷰"'+(c.status==='1차인터뷰'?' selected':'')+'>1차 인터뷰</option><option value="2차인터뷰"'+(c.status==='2차인터뷰'?' selected':'')+'>2차 인터뷰</option><option value="보류"'+(c.status==='보류'?' selected':'')+'>보류</option><option value="채용불가"'+(c.status==='채용불가'?' selected':'')+'>채용 불가</option></select></div>';
     html+='<div class="dsec"><div class="dsec-label">인재등급</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'grade\',this.value)"><option value=""'+(c.grade===''?' selected':'')+'>선택</option><option value="S"'+(c.grade==='S'?' selected':'')+'>S</option><option value="A"'+(c.grade==='A'?' selected':'')+'>A</option><option value="B"'+(c.grade==='B'?' selected':'')+'>B</option><option value="C"'+(c.grade==='C'?' selected':'')+'>C</option><option value="D"'+(c.grade==='D'?' selected':'')+'>D</option></select></div>';
