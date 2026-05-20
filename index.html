@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0085)file:///C:/Users/%EA%B9%80%EB%8B%A4%EC%98%81/Downloads/hiring-dashboard-final_22.html -->
-<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Beyond Music — 채용 대시보드</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./Beyond Music — 채용 대시보드_files/css2" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #f7f6f2;
@@ -62,7 +62,7 @@ body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg);co
 .btn-dark{background:var(--text);color:#fff;border-color:var(--text)}
 .btn-dark:hover{background:#333}
 /* Stats */
-.stats{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;padding:0 28px 20px;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;padding:0 28px 20px;min-width:0}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px}
 .stat.accent-green{border-left:3px solid var(--green-mid)}
 .stat.accent-red{border-left:3px solid #c0392b}
@@ -76,7 +76,7 @@ body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg);co
 .vtab.active{color:var(--text);border-bottom-color:var(--text)}
 /* Kanban */
 .kanban-wrap{padding:0 28px 28px;overflow-x:auto}
-.kanban{display:grid;grid-template-columns:repeat(6,200px);gap:10px;min-width:1260px}
+.kanban{display:grid;grid-template-columns:repeat(7,200px);gap:10px;min-width:1460px}
 .pos-filter{display:flex;gap:6px;flex-wrap:wrap;padding:0 28px;margin-bottom:16px}
 .pos-chip{font-size:12px;padding:5px 14px;border-radius:99px;border:1px solid var(--border-md);background:transparent;color:var(--text2);cursor:pointer;transition:all 0.12s;font-family:inherit;font-weight:500}
 .pos-chip:hover{background:var(--surface2)}
@@ -164,14 +164,14 @@ textarea.finput{resize:vertical;min-height:72px}
 .detail-role{font-size:13px;color:var(--text2)}
 .detail-close{background:none;border:none;cursor:pointer;color:var(--text3);font-size:18px;flex-shrink:0}
 .dsec{margin-bottom:20px}
-.dsec-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.dsec-label{font-size:12px;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
 .dsel{width:100%;font-size:13px;padding:8px 10px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:inherit}
 .comment-box{width:100%;font-size:13px;padding:9px 12px;border-radius:var(--r);border:1px solid var(--border-md);background:var(--surface);color:var(--text);font-family:inherit;resize:vertical;min-height:80px}
 .comment-box:focus{outline:none;border-color:var(--border-dark)}
 .save-row{display:flex;justify-content:flex-end;margin-top:6px}
 </style>
 </head>
-<body><div id="loading-bar" style="position: fixed; top: 0px; left: 0px; right: 0px; background: rgb(24, 24, 20); color: rgb(255, 255, 255); font-size: 12px; text-align: center; padding: 8px; z-index: 9999; display: none;">데이터 불러오는 중...</div>
+<body>
 <div class="shell">
 
 <!-- Sidebar -->
@@ -183,27 +183,29 @@ textarea.finput{resize:vertical;min-height:72px}
   <nav class="nav">
     <div class="nav-group">
       <div class="nav-group-label">채용 현황</div>
-      <div class="nav-item active" onclick="showView(&#39;kanban&#39;,this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="10" rx="1"></rect><rect x="14" y="17" width="7" height="4" rx="1"></rect></svg>
+      <div class="nav-item active" onclick="showView('kanban',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="10" rx="1"/><rect x="14" y="17" width="7" height="4" rx="1"/></svg>
         칸반 보드
       </div>
-      <div class="nav-item" onclick="showView(&#39;process&#39;,this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12h6M9 16h6M9 8h6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path></svg>
+      <div class="nav-item" onclick="showView('process',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 12h6M9 16h6M9 8h6M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
         후보자 진행 DB
-        <span class="nav-badge" id="nb-process">5</span>
+        <span class="nav-badge" id="nb-process">0</span>
       </div>
-      <div class="nav-item" onclick="showView(&#39;jd&#39;,this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-        JD 보관
-        <span class="nav-badge" id="nb-jd">4</span>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">설정</div>
+      <div class="nav-item" onclick="showView('email',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        이메일 템플릿
       </div>
     </div>
     <div class="nav-group">
       <div class="nav-group-label">인재풀</div>
-      <div class="nav-item" onclick="showView(&#39;pool&#39;,this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="7" r="4"></circle><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path><path d="M16 11a4 4 0 0 1 0-8M21 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+      <div class="nav-item" onclick="showView('pool',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 11a4 4 0 0 1 0-8M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
         인재풀 전체
-        <span class="nav-badge" id="nb-pool">3</span>
+        <span class="nav-badge" id="nb-pool">0</span>
       </div>
     </div>
   </nav>
@@ -215,6 +217,19 @@ textarea.finput{resize:vertical;min-height:72px}
 <!-- Main -->
 <main class="main">
 
+  <!-- 이메일 템플릿 뷰 -->
+  <div id="view-email" style="display:none">
+    <div class="page-top">
+      <div class="page-heading">
+        <div class="page-title">이메일 템플릿</div>
+        <div class="page-sub">채용 단계별 이메일 템플릿 관리</div>
+      </div>
+    </div>
+    <div class="pool-wrap">
+      <div id="email-template-list" style="display:flex;flex-direction:column;gap:16px"></div>
+    </div>
+  </div>
+
   <!-- 칸반 뷰 -->
   <div id="view-kanban">
     <div class="page-top">
@@ -223,15 +238,15 @@ textarea.finput{resize:vertical;min-height:72px}
         <div class="page-sub" id="kanban-sub">전체 포지션 · 전형 단계별 현황</div>
       </div>
       <div class="actions">
-        <button class="btn btn-dark" onclick="openModal(&#39;process&#39;)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+        <button class="btn btn-dark" onclick="openModal('process')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
           후보자 추가
         </button>
       </div>
     </div>
-    <div class="stats" id="stats-area"><div class="stat"><div class="stat-label">전체</div><div class="stat-num">5</div><div class="stat-desc">전체</div></div><div class="stat"><div class="stat-label">서류검토 (보류)</div><div class="stat-num">1</div><div class="stat-desc">검토 중</div></div><div class="stat accent-red"><div class="stat-label">서류탈락</div><div class="stat-num">0</div><div class="stat-desc">서류 단계</div></div><div class="stat"><div class="stat-label">1차 인터뷰</div><div class="stat-num">4</div><div class="stat-desc">진행 중</div></div><div class="stat"><div class="stat-label">2차 인터뷰</div><div class="stat-num">0</div><div class="stat-desc">진행 중</div></div><div class="stat accent-green"><div class="stat-label">최종 합격</div><div class="stat-num">0</div><div class="stat-desc">합격</div></div><div class="stat accent-red"><div class="stat-label">불합격</div><div class="stat-num">0</div><div class="stat-desc">인터뷰 단계</div></div></div>
-    <div class="pos-filter" id="pos-filter"><button class="pos-chip on" onclick="setPosFilter(&#39;&#39;,this)">전체 포지션</button><button class="pos-chip" onclick="setPosFilter(&#39;IP Acquisition&#39;,this)">IP Acquisition</button></div>
-    <div class="kanban-wrap"><div class="kanban" id="kanban-board"><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#888780"></span>서류검토 (보류)</div><span class="kcol-count">1</span></div><div class="kcard"><div class="kcard-name">권우진</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-saramin">사람인</span><span class="kcard-date">2026-05-14T15:00:00.000Z</span></div></div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#c0392b"></span>서류탈락</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#378ADD"></span>1차 인터뷰</div><span class="kcol-count">4</span></div><div class="kcard"><div class="kcard-name">김태희</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div><div class="kcard"><div class="kcard-name">이소현</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div><div class="kcard"><div class="kcard-name">양한슬</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div><div class="kcard"><div class="kcard-name">김민혜</div><div class="kcard-role">IP Acquisition</div><div class="kcard-foot"><span class="tag tag-headhunter">헤드헌터</span><span class="kcard-date">2026-05-18T15:00:00.000Z</span></div></div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#534AB7"></span>2차 인터뷰</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#1D9E75"></span>최종 합격</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div><div><div class="kcol-head"><div class="kcol-title"><span class="sdot" style="background:#993c1d"></span>불합격</div><span class="kcol-count">0</span></div><div class="kempty">없음</div></div></div></div>
+    <div class="stats" id="stats-area"></div>
+    <div class="pos-filter" id="pos-filter"></div>
+    <div class="kanban-wrap"><div class="kanban" id="kanban-board"></div></div>
   </div>
 
   <!-- 후보자 진행 DB 뷰 -->
@@ -242,8 +257,8 @@ textarea.finput{resize:vertical;min-height:72px}
         <div class="page-sub">현재 전형 중인 후보자 관리</div>
       </div>
       <div class="actions">
-        <button class="btn btn-dark" onclick="openModal(&#39;process&#39;)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+        <button class="btn btn-dark" onclick="openModal('process')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
           후보자 추가
         </button>
       </div>
@@ -251,12 +266,12 @@ textarea.finput{resize:vertical;min-height:72px}
     <div class="pool-wrap">
       <div class="toolbar">
         <div class="searchbox">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="text" id="proc-search" placeholder="이름, 포지션 검색..." oninput="renderProcess()">
         </div>
         <select class="fsel" id="proc-stage" onchange="renderProcess()">
           <option value="">전형 단계 전체</option>
-          <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
+          <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>레퍼런스 체크</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
         </select>
         <select class="fsel" id="proc-src" onchange="renderProcess()">
           <option value="">소싱채널 전체</option>
@@ -268,33 +283,12 @@ textarea.finput{resize:vertical;min-height:72px}
           <thead><tr>
             <th>이름</th><th>포지션</th><th>전형단계</th><th>소싱채널</th><th>면접일정</th><th>이력서</th><th>등록일</th>
           </tr></thead>
-          <tbody id="proc-tbody"><tr onclick="openDetail(&#39;process&#39;,&#39;1778821769220&#39;)"><td><strong>권우진</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#88878018;color:#888780"><span style="width:6px;height:6px;border-radius:50%;background:#888780;display:inline-block"></span>서류검토</span></td><td><span class="tag tag-saramin">사람인</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://drive.google.com/file/d/1oEcN-NnjjGWJSS-1s3ujWFX6D6rcolNN/view?usp=drive_link" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/14</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180598151&#39;)"><td><strong>김태희</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://docs.google.com/document/d/1kOrSkuKzW_5p2lULFTZrvKQF4UY8w1dt/edit?usp=drive_link&amp;ouid=104689053319304964191&amp;rtpof=true&amp;sd=true" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180741186&#39;)"><td><strong>이소현</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://docs.google.com/document/d/1OkeSF_ynlJjy3pJhrKbccnymTKln1Aty/edit?usp=drive_link&amp;ouid=104689053319304964191&amp;rtpof=true&amp;sd=true" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180889488&#39;)"><td><strong>양한슬</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://drive.google.com/file/d/1L4X-ZO6Hzj5QKGUizxkrxJ8oepqUTzad/view?usp=drive_link" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr><tr onclick="openDetail(&#39;process&#39;,&#39;1779180947431&#39;)"><td><strong>김민혜</strong></td><td style="color:var(--text2)">IP Acquisition</td><td><span class="stage-badge" style="background:#378ADD18;color:#378ADD"><span style="width:6px;height:6px;border-radius:50%;background:#378ADD;display:inline-block"></span>1차 인터뷰</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td style="font-size:12px;color:var(--text2);">—</td><td><a class="resume-link" href="https://drive.google.com/file/d/13Pez9XrT_vCWPC_fd75lTFDxQ2cg5a-h/view?usp=drive_link" target="_blank">보기</a></td><td style="font-size:11px;color:var(--text3);">05/18</td></tr></tbody>
+          <tbody id="proc-tbody"></tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- JD 보관 뷰 -->
-  <div id="view-jd" style="display:none">
-    <div class="page-top">
-      <div class="page-heading">
-        <div class="page-title">JD 보관</div>
-        <div class="page-sub">채용 포지션별 JD 및 공고 포스터 관리</div>
-      </div>
-      <div class="actions">
-        <button class="btn btn-dark" onclick="openJDModal()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:14px;height:14px"><path d="M12 5v14M5 12h14"></path></svg>
-          JD 등록
-        </button>
-      </div>
-    </div>
-    <div class="pool-wrap">
-      <div class="toolbar" style="margin-bottom:14px">
-        <select class="fsel" id="jd-pos-filter" onchange="renderJD()"><option value="">포지션 전체</option><option value="IP Acquisition">IP Acquisition</option></select>
-      </div>
-      <div id="jd-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px"><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779262889628&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779262889628&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="border-radius:var(--r);overflow:hidden;border:1px solid var(--border);margin-bottom:4px"><img src="./Beyond Music — 채용 대시보드_files/rqxke590brquzjsast41.png" style="width:100%;display:block;max-height:180px;object-fit:cover"></div><a href="./Beyond Music — 채용 대시보드_files/rqxke590brquzjsast41.png" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#EEEDFE;border-radius:var(--r);text-decoration:none"><svg viewBox="0 0 24 24" fill="none" stroke="#4a3fb0" stroke-width="2" style="width:16px;height:16px;flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span style="font-size:13px;font-weight:500;color:#4a3fb0">공고 포스터 보기</span></a><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779262920504&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779262920504&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">공고 포스터 없음</div><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779262991875&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779262991875&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">공고 포스터 없음</div><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px"><div><div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">포지션</div><div style="font-size:15px;font-weight:600;color:var(--text)">IP Acquisition</div></div><div style="display:flex;gap:6px"><button onclick="openJDEditModal(&#39;1779263015086&#39;)" style="background:var(--surface2);border:1px solid var(--border-md);border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:12px;padding:4px 10px">수정</button><button onclick="deleteJD(&#39;1779263015086&#39;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px">×</button></div></div><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">공고 포스터 없음</div><div style="display:flex;flex-direction:column;gap:8px"><div style="padding:10px 12px;background:var(--surface2);border-radius:var(--r);font-size:12px;color:var(--text3)">Internal JD 없음</div></div><div style="font-size:11px;color:var(--text3)">2026-05-19T15:00:00.000Z</div></div></div>
-    </div>
-  </div>
   <div id="view-pool" style="display:none">
     <div class="page-top">
       <div class="page-heading">
@@ -302,12 +296,12 @@ textarea.finput{resize:vertical;min-height:72px}
         <div class="page-sub">탈락/홀드 포함 전체 후보자 마스터</div>
       </div>
       <div class="actions">
-        <button class="btn" onclick="openModal(&#39;pool&#39;)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+        <button class="btn" onclick="openModal('pool')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
           인재풀 등록
         </button>
-        <button class="btn btn-dark" onclick="openModal(&#39;process&#39;)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"></path></svg>
+        <button class="btn btn-dark" onclick="openModal('process')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
           후보자 추가
         </button>
       </div>
@@ -315,7 +309,7 @@ textarea.finput{resize:vertical;min-height:72px}
     <div class="pool-wrap">
       <div class="toolbar">
         <div class="searchbox">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="text" id="pool-search" placeholder="이름, 스킬, 메모 검색..." oninput="renderPool()">
         </div>
         <select class="fsel" id="pool-src" onchange="renderPool()">
@@ -385,12 +379,7 @@ textarea.finput{resize:vertical;min-height:72px}
           <thead><tr>
             <th>이름</th><th>직군</th><th>인재등급</th><th>스킬</th><th>소싱채널</th><th>상태</th><th>재접촉</th><th>이력서</th><th>메모</th><th>등록일</th>
           </tr></thead>
-          <tbody id="pool-tbody"><tr onclick="openDetail(&#39;pool&#39;,&#39;1779243177722&#39;)"><td><strong>존한(John Han)</strong></td><td>Music Strategy</td><td><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#eee18;color:#888">D</span></td><td></td><td><span class="tag tag-rec">지인소개</span></td><td><span class="sbadge" style="background:#fae8e2;color:#8c3318">채용 불가</span></td><td style="font-size:12px;font-weight:600;color:var(--text3)">N</td><td><span style="color:var(--text3);font-size:12px">—</span></td><td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">* Spotify쪽 사람들 networking하려고 하다가 찾은 분인데 관련된 피드백 손대표에게 받았어요. Pool에 넣어 놓고 참고하면 좋을 듯요 (안 뽑을 사람도 그 이유를 알아 놓는 차원에서) 
-
-* "유경철 이사는 안면은 있다고 하는데 친분까지 있는 것은 아닌것 같구요, 다만 이 친구와 대학교 동문(토론토)인 다른 Meta 지인이 있어서 그 분 통하면 소개받을 수 있을 것 같습니다.링크드인에 나와있는대로 스포티파이에 입사한지 얼마 안 된 친구인데, 최근에 스포티파이 한국 지사장으로 조인한 분이 업계에서 좀 (안 좋은 쪽으로) 유명한 분이어서, 회사 분위기가 매우 안 좋은가봐요. 최근에 거기 오래 있던 사람들이 이직하거나 이직 준비중이라는 이야기도 들린다고 하니 이 친구 마음도 싱숭생숭하겠죠? 참고하시기 바랍니다.이 친구 개인에 대한 평판은 아주 긍정적이진 않은것 같아요. 교표답다, 약간 4차원이다 이런 표현들이 나오네요.정리하면...소개 목적이라면 목적과 타임라인 주시면 제가 중간에서 세팅해보겠습니다.혹시 이 친구를 '영입'하실 목적이라면 좀 더 신중하게 더 알아봐야할 것 같습니다."</td><td style="font-size:11px;color:var(--text3);">05/19</td></tr><tr onclick="openDetail(&#39;pool&#39;,&#39;1779243343514&#39;)"><td><strong>이선정</strong></td><td>Director, YouTube Music in Korea</td><td><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#1D9E7518;color:#1D9E75">S</span></td><td><span class="skill-pill">고문</span></td><td><span class="tag tag-rec">지인소개</span></td><td><span class="sbadge" style="background:#faebd4;color:#7a4a08">보류</span></td><td style="font-size:12px;font-weight:600;color:var(--green)">Y</td><td><span style="color:var(--text3);font-size:12px">—</span></td><td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">[메모/대표님 의견]
-"제 BCG후배이자, 저희 YT 파트너쉽 수립에 있어서 그동안 저와 직접 이야기 나눈 상대방이였습니다. 조만간 퇴사 예정이어서, 필요 시 저희 고문직 영입을 고민해 봅시다 (인재 hiring, 외부 파트너쉽에 손대표와 또 다른 결로 도움이 될 듯해서요)"</td><td style="font-size:11px;color:var(--text3);">05/19</td></tr><tr onclick="openDetail(&#39;pool&#39;,&#39;1779243558272&#39;)"><td><strong>최영예</strong></td><td>D/A팀 매니저급</td><td><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#534AB718;color:#534AB7">B</span></td><td><span class="skill-pill">데이터 분석</span><span class="skill-pill">D/A팀</span></td><td><span class="tag tag-headhunter">헤드헌터</span></td><td><span class="sbadge" style="background:#faebd4;color:#7a4a08">보류</span></td><td style="font-size:12px;font-weight:600;color:var(--green)">Y</td><td><a class="resume-link" href="https://res.cloudinary.com/dv0pgto0r/image/upload/v1779243556/vipjxqzh3trcu85bu7sd.pdf" target="_blank">보기</a></td><td style="font-size:12px;color:var(--text2);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">* IT 개발팀과 ecommerce팀에서 영어, 일어로 근무.
-* Python과 SQL을 활용한 데이터 추출, 가공, 시각화의 분석.
-* 데이터를 기반으로한 비즈니스 의사결정 서포트</td><td style="font-size:11px;color:var(--text3);">05/19</td></tr></tbody>
+          <tbody id="pool-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -399,43 +388,7 @@ textarea.finput{resize:vertical;min-height:72px}
 </main>
 </div>
 
-<!-- JD 수정 모달 -->
-<div class="overlay" id="jd-edit-modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">JD 수정</div>
-      <button class="modal-close" onclick="closeJDEditModal()">✕</button>
-    </div>
-    <input type="hidden" id="jd-edit-id">
-    <div class="fgroup"><label class="flabel">포지션</label>
-      <input class="finput" id="jd-edit-pos" readonly="" style="background:var(--surface2);color:var(--text2)">
-    </div>
-    <div class="fgroup"><label class="flabel">Internal JD 교체 (PDF, Word)</label>
-      <div class="file-drop" id="jd-edit-internal-drop" onclick="document.getElementById(&#39;jd-edit-internal-file&#39;).click()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-        <p id="jd-edit-internal-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 새 파일 업로드</p>
-        <span style="font-size:11px;color:var(--text3)">기존 파일을 교체합니다</span>
-        <input type="file" id="jd-edit-internal-file" accept=".pdf,.doc,.docx" onchange="handleJDEditFile(&#39;internal&#39;)" style="display:none">
-      </div>
-    </div>
-    <div class="fgroup"><label class="flabel">공고 포스터 교체 (이미지)</label>
-      <div class="file-drop" id="jd-edit-poster-drop" onclick="document.getElementById(&#39;jd-edit-poster-file&#39;).click()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-        <p id="jd-edit-poster-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 새 이미지 업로드</p>
-        <span style="font-size:11px;color:var(--text3)">기존 파일을 교체합니다</span>
-        <input type="file" id="jd-edit-poster-file" accept="image/*" onchange="handleJDEditFile(&#39;poster&#39;)" style="display:none">
-      </div>
-      <div id="jd-edit-poster-preview" style="display:none;margin-top:8px"><img id="jd-edit-poster-img" style="width:100%;border-radius:var(--r);border:1px solid var(--border)"></div>
-    </div>
-    <div class="fgroup"><label class="flabel">메모</label><textarea class="finput" id="jd-edit-memo" style="min-height:60px"></textarea></div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeJDEditModal()">취소</button>
-      <button class="btn btn-dark" onclick="updateJD()">저장</button>
-    </div>
-  </div>
-</div>
-
-<!-- JD 모달 -->
+<!-- Add Modal -->
 <div class="overlay" id="jd-modal">
   <div class="modal">
     <div class="modal-head">
@@ -449,19 +402,19 @@ textarea.finput{resize:vertical;min-height:72px}
       </div>
     </div>
     <div class="fgroup"><label class="flabel">Internal JD (PDF, Word)</label>
-      <div class="file-drop" id="jd-internal-drop" onclick="document.getElementById(&#39;jd-internal-file&#39;).click()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      <div class="file-drop" id="jd-internal-drop" onclick="document.getElementById('jd-internal-file').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         <p id="jd-internal-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 파일 업로드</p>
         <span style="font-size:11px;color:var(--text3)">PDF, DOC, DOCX</span>
-        <input type="file" id="jd-internal-file" accept=".pdf,.doc,.docx" onchange="handleJDFile(&#39;internal&#39;)" style="display:none">
+        <input type="file" id="jd-internal-file" accept=".pdf,.doc,.docx" onchange="handleJDFile('internal')" style="display:none">
       </div>
     </div>
     <div class="fgroup"><label class="flabel">공고 포스터 (이미지)</label>
-      <div class="file-drop" id="jd-poster-drop" onclick="document.getElementById(&#39;jd-poster-file&#39;).click()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+      <div class="file-drop" id="jd-poster-drop" onclick="document.getElementById('jd-poster-file').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         <p id="jd-poster-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 이미지 업로드</p>
         <span style="font-size:11px;color:var(--text3)">JPG, PNG, GIF</span>
-        <input type="file" id="jd-poster-file" accept="image/*" onchange="handleJDFile(&#39;poster&#39;)" style="display:none">
+        <input type="file" id="jd-poster-file" accept="image/*" onchange="handleJDFile('poster')" style="display:none">
       </div>
       <div id="jd-poster-preview" style="display:none;margin-top:8px"><img id="jd-poster-img" style="width:100%;border-radius:var(--r);border:1px solid var(--border)"></div>
     </div>
@@ -481,8 +434,8 @@ textarea.finput{resize:vertical;min-height:72px}
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-tabs">
-      <button class="mtab active" id="mtab-process" onclick="switchModalTab(&#39;process&#39;)">후보자 진행 DB</button>
-      <button class="mtab" id="mtab-pool" onclick="switchModalTab(&#39;pool&#39;)">인재풀 등록</button>
+      <button class="mtab active" id="mtab-process" onclick="switchModalTab('process')">후보자 진행 DB</button>
+      <button class="mtab" id="mtab-pool" onclick="switchModalTab('pool')">인재풀 등록</button>
     </div>
 
     <!-- 후보자 진행 폼 -->
@@ -491,7 +444,7 @@ textarea.finput{resize:vertical;min-height:72px}
         <div class="fgroup"><label class="flabel">이름 *</label><input class="finput" id="p-name" placeholder="김지수"></div>
         <div class="fgroup"><label class="flabel">포지션</label>
           <div style="display:flex;gap:6px">
-            <select class="finput" id="p-pos" style="flex:1"><option value="IP Acquisition">IP Acquisition</option><option value="전략/투자팀">전략/투자팀</option></select>
+            <select class="finput" id="p-pos" style="flex:1"></select>
             <button type="button" class="btn" style="padding:7px 10px;flex-shrink:0;font-size:12px" onclick="addNewPosition()" title="포지션 추가">+</button>
           </div>
         </div>
@@ -504,17 +457,17 @@ textarea.finput{resize:vertical;min-height:72px}
         </div>
         <div class="fgroup"><label class="flabel">전형단계</label>
           <select class="finput" id="p-stage">
-            <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
+            <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>레퍼런스 체크</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
           </select>
         </div>
       </div>
       <div class="fgroup"><label class="flabel">면접 일정</label><input class="finput" type="date" id="p-date"></div>
       <div class="fgroup"><label class="flabel">이력서 업로드</label>
-        <div class="file-drop" id="p-drop" onclick="document.getElementById(&#39;p-file&#39;).click()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <div class="file-drop" id="p-drop" onclick="document.getElementById('p-file').click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <p id="p-file-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 이력서 업로드</p>
           <span style="font-size:11px;color:var(--text3)">PDF, DOC, DOCX</span>
-          <input type="file" id="p-file" accept=".pdf,.doc,.docx" onchange="handleFile(&#39;p&#39;)" style="display:none">
+          <input type="file" id="p-file" accept=".pdf,.doc,.docx" onchange="handleFile('p')" style="display:none">
         </div>
       </div>
       <div class="fgroup"><label class="flabel">또는 링크 직접 입력</label><input class="finput" id="p-resume" placeholder="구글 드라이브 링크 붙여넣기"></div>
@@ -556,11 +509,11 @@ textarea.finput{resize:vertical;min-height:72px}
         </select>
       </div>
       <div class="fgroup"><label class="flabel">이력서 업로드</label>
-        <div class="file-drop" id="l-drop" onclick="document.getElementById(&#39;l-file&#39;).click()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        <div class="file-drop" id="l-drop" onclick="document.getElementById('l-file').click()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 6px;display:block;width:20px;height:20px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <p id="l-file-name" style="font-size:12px;color:var(--text2);margin-bottom:3px">클릭하여 이력서 업로드</p>
           <span style="font-size:11px;color:var(--text3)">PDF, DOC, DOCX</span>
-          <input type="file" id="l-file" accept=".pdf,.doc,.docx" onchange="handleFile(&#39;l&#39;)" style="display:none">
+          <input type="file" id="l-file" accept=".pdf,.doc,.docx" onchange="handleFile('l')" style="display:none">
         </div>
       </div>
       <div class="fgroup"><label class="flabel">또는 링크 직접 입력</label><input class="finput" id="l-resume" placeholder="구글 드라이브 링크 붙여넣기"></div>
@@ -590,11 +543,11 @@ textarea.finput{resize:vertical;min-height:72px}
 </div>
 
 <script>
-const STAGES = ['서류검토','서류탈락','1차 인터뷰','2차 인터뷰','최종 합격','불합격'];
-const STAGE_LABELS = {'서류검토':'서류검토 (보류)','서류탈락':'서류탈락','1차 인터뷰':'1차 인터뷰','2차 인터뷰':'2차 인터뷰','최종 합격':'최종 합격','불합격':'불합격'};
-const STAGE_COLORS = {'서류검토':'#888780','서류탈락':'#c0392b','1차 인터뷰':'#378ADD','2차 인터뷰':'#534AB7','최종 합격':'#1D9E75','불합격':'#993c1d'};
+const STAGES = ['서류검토','서류탈락','1차 인터뷰','레퍼런스 체크','2차 인터뷰','최종 합격','불합격'];
+const STAGE_LABELS = {'서류검토':'서류검토 (보류)','서류탈락':'서류탈락','1차 인터뷰':'1차 인터뷰','레퍼런스 체크':'레퍼런스 체크','2차 인터뷰':'2차 인터뷰','최종 합격':'최종 합격','불합격':'불합격'};
+const STAGE_COLORS = {'서류검토':'#888780','서류탈락':'#c0392b','1차 인터뷰':'#378ADD','레퍼런스 체크':'#0F6E56','2차 인터뷰':'#534AB7','최종 합격':'#1D9E75','불합격':'#993c1d'};
 const SRC_CLASS = {'사람인':'tag-saramin','잡코리아':'tag-jobkorea','리멤버':'tag-remember','헤드헌터':'tag-headhunter','지인소개':'tag-rec','기타':'tag-gray'};
-const API = 'https://script.google.com/macros/s/AKfycby3AhKiEQHawkscHwobliRVQUX3wA06hOtapWBXzioqn48YCZI2IeDIQaJmMp629S6j/exec';
+const API = 'https://script.google.com/macros/s/AKfycbwGR1r1-VYMt98SG5xQ4Wdce4q62Gszu5xcYJ77CQT-8U73-nDGIO20Oql9JPBpDYw/exec';
 const CLOUDINARY_CLOUD = 'dv0pgto0r';
 const CLOUDINARY_UPLOAD_PRESET = 'bm_resumes';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/auto/upload';
@@ -618,12 +571,12 @@ function hideLoading(){var el=document.getElementById('loading-bar');if(el)el.st
 async function loadAll(){
   showLoading('데이터 불러오는 중...');
   try {
-    var results = await Promise.all([apiGet('process'),apiGet('pool'),apiGet('jd')]);
-    var p = results[0], l = results[1], j = results[2];
-    processList = p.map(function(r){return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:r['면접일정']||'',resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',imemo:r['평가메모']||'',date:r['등록일']||''};});
+    var results = await Promise.all([apiGet('process'),apiGet('pool')]);
+    var p = results[0], l = results[1];
+    processList = p.map(function(r){return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:r['면접일정']||'',resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:r['입사날짜']||'',date:r['등록일']||''};});
     poolList = l.map(function(r){return {id:String(r['ID']),name:r['이름']||'',role:r['직군']||'',skills:r['스킬태그']?String(r['스킬태그']).split(',').map(function(s){return s.trim();}).filter(Boolean):[],strength:r['강점']||'',weakness:r['약점']||'',salary:r['연봉수준']||'',position:r['역할']||'',grade:r['인재등급']||'',src:r['소싱채널']||'',status:r['상태']||'active',recontact:r['재접촉']||'N',resume:r['이력서링크']||'',memo:r['메모']||'',linkedin:r['LinkedIn']||'',date:r['등록일']||''};});
-    jdList = j.map(function(r){return {id:String(r['ID']),pos:r['포지션']||'',internal:r['Internal_JD']||'',poster:r['공고포스터']||'',date:r['등록일']||'',memo:r['메모']||''};});
-    document.getElementById('nb-jd').textContent=jdList.length;
+    
+    
     renderAll();
   } catch(e) {
     showLoading('데이터 로드 실패. 페이지를 새로고침 해주세요.');
@@ -632,6 +585,7 @@ async function loadAll(){
   hideLoading();
   loadPositions();
   renderPositionSelect();
+  loadEmailTemplates();
 }
 
 function srcTag(s){return '<span class="tag '+(SRC_CLASS[s]||'tag-saramin')+'">'+s+'</span>';}
@@ -653,6 +607,7 @@ function renderStats(){
   var s1=filtered.filter(function(c){return c.stage==='서류검토';}).length;
   var s2=filtered.filter(function(c){return c.stage==='서류탈락';}).length;
   var s3=filtered.filter(function(c){return c.stage==='1차 인터뷰';}).length;
+  var s_ref=filtered.filter(function(c){return c.stage==='레퍼런스 체크';}).length;
   var s4=filtered.filter(function(c){return c.stage==='2차 인터뷰';}).length;
   var s5=filtered.filter(function(c){return c.stage==='최종 합격';}).length;
   var s6=filtered.filter(function(c){return c.stage==='불합격';}).length;
@@ -663,6 +618,7 @@ function renderStats(){
     '<div class="stat"><div class="stat-label">서류검토 (보류)</div><div class="stat-num">'+s1+'</div><div class="stat-desc">검토 중</div></div>'+
     '<div class="stat accent-red"><div class="stat-label">서류탈락</div><div class="stat-num">'+s2+'</div><div class="stat-desc">서류 단계</div></div>'+
     '<div class="stat"><div class="stat-label">1차 인터뷰</div><div class="stat-num">'+s3+'</div><div class="stat-desc">진행 중</div></div>'+
+    '<div class="stat" style="border-left:3px solid #0F6E56"><div class="stat-label">레퍼런스 체크</div><div class="stat-num">'+s_ref+'</div><div class="stat-desc">진행 중</div></div>'+
     '<div class="stat"><div class="stat-label">2차 인터뷰</div><div class="stat-num">'+s4+'</div><div class="stat-desc">진행 중</div></div>'+
     '<div class="stat accent-green"><div class="stat-label">최종 합격</div><div class="stat-num">'+s5+'</div><div class="stat-desc">합격</div></div>'+
     '<div class="stat accent-red"><div class="stat-label">불합격</div><div class="stat-num">'+s6+'</div><div class="stat-desc">인터뷰 단계</div></div>';
@@ -764,10 +720,10 @@ function renderPool(){
 function showView(v,el){
   document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
   el.classList.add('active');
-  ['kanban','process','pool','jd'].forEach(function(k){document.getElementById('view-'+k).style.display=k===v?'block':'none';});
+  ['kanban','process','pool','email'].forEach(function(k){document.getElementById('view-'+k).style.display=k===v?'block':'none';});
   if(v==='process')renderProcess();
   if(v==='pool'){renderSkillChips();renderPool();}
-  if(v==='jd'){renderJDPosFilter();renderJD();}
+  if(v==='email'){renderEmailTemplates();}
 }
 
 function openModal(tab){currentModalTab=tab;switchModalTab(tab);document.getElementById('add-modal').classList.add('open');}
@@ -884,9 +840,18 @@ function openDetail(type,id){
 
     // 종합점수
     var scoreVal=c.score||'—';
-    html+='<div style="background:var(--bg);border-radius:var(--r);padding:12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:13px;font-weight:500;color:var(--text)">종합 가중 점수</span><span style="font-size:20px;font-weight:700;color:#378ADD">'+scoreVal+'<span style="font-size:12px;color:var(--text3);font-weight:400"> / 5.0</span></span></div>';
+    var gradeColors={'S':'#1D9E75','A':'#378ADD','B':'#534AB7','C':'#BA7517','D':'#99391D'};
+    var gradeColor=gradeColors[c.igrade]||'#888';
+    var gradeBadge=c.igrade?'<span style="font-size:14px;font-weight:700;padding:3px 12px;border-radius:99px;background:'+gradeColor+'18;color:'+gradeColor+'">'+c.igrade+'</span>':'<span style="font-size:12px;color:var(--text3)">—</span>';
+    html+='<div style="background:var(--bg);border-radius:var(--r);padding:12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between"><div><span style="font-size:13px;font-weight:500;color:var(--text)">종합 가중 점수</span><div style="font-size:11px;color:var(--text3);margin-top:2px">S≥4.6 / A≥3.5 / B≥3.0 / C≥2.5 / D&lt;2.5</div></div><div style="display:flex;align-items:center;gap:10px">'+gradeBadge+'<span style="font-size:20px;font-weight:700;color:#378ADD">'+scoreVal+'<span style="font-size:12px;color:var(--text3);font-weight:400"> / 5.0</span></span></div></div>';
     html+='<div><label class="flabel" style="font-size:11px;color:var(--text2);margin-bottom:5px;display:block">평가 메모</label><textarea class="comment-box" id="eval-memo" style="min-height:60px">'+(c.imemo||'')+'</textarea><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveEvalMemo(\''+id+'\')">메모 저장</button></div></div>';
     html+='</div>';
+    html+='<div class="dsec" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px"><div class="dsec-label" style="margin-bottom:10px">✉️ 이메일 발송</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+        emailTemplates.map(function(t){
+          return '<button class="btn" style="font-size:12px;text-align:left;justify-content:flex-start" onclick="sendEmail(\''+id+'\',\''+t.id+'\')">'+t.name+'</button>';
+        }).join('')+
+      '</div></div>';
     html+='<div class="dsec" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div class="dsec-label" style="margin-bottom:0">📋 Activity Log</div></div>';
     var logs=[];
     try{if(c.log)logs=JSON.parse(c.log);}catch(e){}
@@ -917,13 +882,29 @@ function openDetail(type,id){
     html+='<div class="dsec"><div class="dsec-label">메모</div><textarea class="comment-box" id="detail-comment">'+(c.memo||'')+'</textarea><div class="save-row"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'pool\',\''+id+'\',\'memo\')">저장</button></div></div>';
   }
   html+='<div class="dsec"><div class="dsec-label">등록일</div><span style="font-size:13px;color:var(--text2);">'+c.date+'</span></div>';
+
+  if(type==='process'){
+    var isConfirmed=c.confirmed==='Y';
+    html+='<div style="margin-top:16px;padding:16px;background:'+(isConfirmed?'var(--green-bg)':'var(--surface2)')+';border-radius:var(--r-lg);border:1px solid '+(isConfirmed?'var(--green-mid)':'var(--border)')+'">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:'+(isConfirmed?'12':'0')+'px">'+
+        '<div>'+
+          '<div style="display:flex;align-items:center;gap:8px">'+
+            '<span style="font-size:13px;font-weight:600;color:'+(isConfirmed?'var(--green)':'var(--text)')+'">'+
+              (isConfirmed?'✅ 입사 확정':'입사 확정')+'</span>'+
+            (isConfirmed&&c.joindate?'<span style="font-size:12px;color:var(--green)">'+c.joindate+'</span>':'')+'</div>'+
+          (!isConfirmed?'<div style="font-size:11px;color:var(--text3);margin-top:4px">입사 확정 클릭 후 입사 날짜를 설정해주세요</div>':'')+'</div>'+
+        '<button class="btn '+(isConfirmed?'':'btn-dark')+'" style="font-size:12px;padding:6px 14px;'+(isConfirmed?'color:var(--coral);border-color:var(--coral-bg);background:var(--coral-bg)':'')+'" onclick="toggleConfirm(\''+id+'\')">'+
+          (isConfirmed?'확정 취소':'입사 확정')+'</button>'+
+      '</div>'+
+      (isConfirmed?'<div style="display:flex;gap:8px;align-items:center"><input type="date" class="dsel" id="join-date" value="'+(c.joindate||'')+'" style="flex:1"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveJoinDate(\''+id+'\')">날짜 저장</button></div>':'')+'</div>';
+  }
   html+='<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)"><button class="btn" style="width:100%;color:var(--coral);border-color:var(--coral-bg);background:var(--coral-bg);font-size:13px" onclick="deleteEntry(\''+type+'\',\''+id+'\')">🗑 이 후보자 삭제</button></div>';
   document.getElementById('d-body').innerHTML=html;
   document.getElementById('detail-overlay').classList.add('open');
 }
 
 async function updateField(type,id,field,val){
-  var fieldMap={'stage':'전형단계','idate':'면접일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그'};
+  var fieldMap={'stage':'전형단계','idate':'면접일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그','confirmed':'입사확정','joindate':'입사날짜'};
   var data={'ID':id};
   data[fieldMap[field]||field]=val;
   showLoading('저장 중...');
@@ -1155,7 +1136,6 @@ async function setScore(id,field,val,type){
   var c=processList.find(function(x){return String(x.id)===String(id);});
   if(!c)return;
   c[field]=val;
-  // 종합점수 계산 (각 20%)
   var memberFields=['s1','s2','s3','s6','s7'];
   var leaderFields=['s1','s4','s5','s6','s7'];
   var fields=type==='member'?memberFields:leaderFields;
@@ -1163,11 +1143,20 @@ async function setScore(id,field,val,type){
   fields.forEach(function(f){if(c[f]){total+=Number(c[f]);count++;}});
   var avg=count>0?(total/count).toFixed(1):0;
   c.score=avg;
+  // 등급 자동 계산
+  var grade='';
+  var avgNum=parseFloat(avg);
+  if(avgNum>=4.6) grade='S';
+  else if(avgNum>=3.5) grade='A';
+  else if(avgNum>=3.0) grade='B';
+  else if(avgNum>=2.5) grade='C';
+  else grade='D';
   var fieldMap2={'s1':'전문성','s2':'문제해결능력','s3':'셀프리더십','s4':'전략적사고','s5':'팀리딩','s6':'협업','s7':'CultureFit'};
   showLoading('저장 중...');
   var data={'ID':id};
   data[fieldMap2[field]]=val;
   data['종합점수']=avg;
+  data['인터뷰등급']=grade;
   await apiPost('update','process',data);
   await loadAll();
   openDetail('process',id);
@@ -1185,6 +1174,25 @@ async function saveEvalMemo(id){
   var val=document.getElementById('eval-memo').value;
   showLoading('저장 중...');
   await apiPost('update','process',{'ID':id,'평가메모':val});
+  await loadAll();
+  openDetail('process',id);
+}
+
+async function toggleConfirm(id){
+  var c=processList.find(function(x){return String(x.id)===String(id);});
+  if(!c)return;
+  var newVal=c.confirmed==='Y'?'N':'Y';
+  showLoading('저장 중...');
+  await apiPost('update','process',{'ID':id,'입사확정':newVal});
+  await loadAll();
+  openDetail('process',id);
+}
+
+async function saveJoinDate(id){
+  var val=document.getElementById('join-date').value;
+  if(!val){alert('날짜를 선택해주세요');return;}
+  showLoading('저장 중...');
+  await apiPost('update','process',{'ID':id,'입사날짜':val});
   await loadAll();
   openDetail('process',id);
 }
@@ -1216,6 +1224,78 @@ async function deleteLog(id,idx){
   await updateField('process',id,'log',JSON.stringify(logs));
 }
 
+// 이메일 템플릿
+let emailTemplates = [];
+const DEFAULT_TEMPLATES = [
+  {id:'1차_인터뷰_안내', name:'1차 인터뷰 안내', subject:'[Beyond Music] 1차 인터뷰 안내 드립니다 - {이름}님', body:'안녕하세요, {이름}님.\nBeyond Music 피플팀입니다.\n서류 검토 결과, {이름}님을 1차 인터뷰에 초대드리고자 연락드립니다.\n면접 일정은 별도로 조율 후 안내드리겠습니다.\n감사합니다.\nBeyond Music 피플팀 드림'},
+  {id:'1차_합격', name:'1차 합격', subject:'[Beyond Music] 1차 인터뷰 합격을 축하드립니다 - {이름}님', body:'안녕하세요, {이름}님.\nBeyond Music 피플팀입니다.\n1차 인터뷰 결과, 합격을 축하드립니다.\n2차 인터뷰 일정은 별도로 안내드리겠습니다.\n감사합니다.\nBeyond Music 피플팀 드림'},
+  {id:'2차_인터뷰_안내', name:'2차 인터뷰 안내', subject:'[Beyond Music] 2차 인터뷰 안내 드립니다 - {이름}님', body:'안녕하세요, {이름}님.\nBeyond Music 피플팀입니다.\n{이름}님을 2차 인터뷰에 초대드리고자 연락드립니다.\n면접 일정은 별도로 조율 후 안내드리겠습니다.\n감사합니다.\nBeyond Music 피플팀 드림'},
+  {id:'2차_합격', name:'2차 합격', subject:'[Beyond Music] 2차 인터뷰 합격을 축하드립니다 - {이름}님', body:'안녕하세요, {이름}님.\nBeyond Music 피플팀입니다.\n2차 인터뷰 결과, 합격을 진심으로 축하드립니다.\n오퍼레터는 별도로 발송드리겠습니다.\n감사합니다.\nBeyond Music 피플팀 드림'},
+  {id:'오퍼레터', name:'오퍼레터', subject:'[Beyond Music] 오퍼레터 전달드립니다 - {이름}님', body:'안녕하세요, {이름}님.\nBeyond Music 피플팀입니다.\n오퍼레터를 첨부드립니다. 검토 후 회신 부탁드립니다.\n감사합니다.\nBeyond Music 피플팀 드림'},
+  {id:'입사_안내', name:'입사 안내', subject:'[Beyond Music] 입사 안내 드립니다 - {이름}님', body:'안녕하세요, {이름}님.\nBeyond Music 피플팀입니다.\n입사일 및 준비사항을 안내드립니다.\n입사일: {입사날짜}\n궁금하신 사항은 언제든지 연락 주세요.\n감사합니다.\nBeyond Music 피플팀 드림'}
+];
+
+function loadEmailTemplates(){
+  try{var saved=localStorage.getItem('bm_email_templates');if(saved)emailTemplates=JSON.parse(saved);}catch(e){}
+  if(!emailTemplates.length) emailTemplates=JSON.parse(JSON.stringify(DEFAULT_TEMPLATES));
+}
+
+function saveEmailTemplates(){
+  try{localStorage.setItem('bm_email_templates',JSON.stringify(emailTemplates));}catch(e){}
+}
+
+function renderEmailTemplates(){
+  var list=document.getElementById('email-template-list');
+  if(!list)return;
+  list.innerHTML=emailTemplates.map(function(t,i){
+    return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">'+
+        '<span style="font-size:14px;font-weight:600;color:var(--text)">✉️ '+t.name+'</span>'+
+        '<div style="display:flex;gap:8px">'+
+          '<button class="btn" style="font-size:12px;padding:6px 12px" onclick="resetTemplate('+i+')">초기화</button>'+
+          '<button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveTemplate('+i+')">저장</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="fgroup"><label class="flabel">제목</label><input class="finput" id="et-subject-'+i+'" value="'+t.subject.replace(/"/g,"&quot;")+'"></div>'+
+      '<div class="fgroup"><label class="flabel">내용 <span style="font-size:10px;color:var(--text3);font-weight:400">{이름}, {입사날짜} 자동 치환</span></label>'+
+        '<textarea class="finput" id="et-body-'+i+'" style="min-height:140px">'+t.body+'</textarea>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function saveTemplate(i){
+  emailTemplates[i].subject=document.getElementById('et-subject-'+i).value;
+  emailTemplates[i].body=document.getElementById('et-body-'+i).value;
+  saveEmailTemplates();
+  alert('저장됐어요!');
+}
+
+function resetTemplate(i){
+  if(!confirm('초기 템플릿으로 되돌리겠습니까?'))return;
+  emailTemplates[i]=JSON.parse(JSON.stringify(DEFAULT_TEMPLATES[i]));
+  saveEmailTemplates();
+  renderEmailTemplates();
+}
+
+function sendEmail(candidateId, templateId){
+  var c=processList.find(function(x){return String(x.id)===String(candidateId);});
+  if(!c)return;
+  var t=emailTemplates.find(function(x){return x.id===templateId;});
+  if(!t)return;
+  var subject=t.subject.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'');
+  var body=t.body.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'');
+  var mailto='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.open(mailto);
+  // Activity Log에 자동 기록
+  var logs=[];
+  try{if(c.log)logs=JSON.parse(c.log);}catch(e){}
+  var now=new Date();
+  var dateStr=now.getFullYear()+'.'+(now.getMonth()+1).toString().padStart(2,'0')+'.'+now.getDate().toString().padStart(2,'0')+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  logs.unshift({date:dateStr,text:'📧 '+t.name+' 메일 발송'});
+  apiPost('update','process',{'ID':candidateId,'활동로그':JSON.stringify(logs)}).then(function(){loadAll();openDetail('process',candidateId);});
+}
+
 function toggleGrade(){
   var panel=document.getElementById('grade-panel');
   var arrow=document.getElementById('grade-arrow');
@@ -1223,11 +1303,10 @@ function toggleGrade(){
   else{panel.style.display='none';arrow.textContent='▼';}
 }
 
-function renderAll(){renderStats();renderPosFilter();renderKanban();renderProcess();renderPool();renderJDPosFilter();renderJD();}
+function renderAll(){renderStats();renderPosFilter();renderKanban();renderProcess();renderPool();}
 document.getElementById('add-modal').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal();});
 
 loadAll();
 </script>
-
-
-</body></html>
+</body>
+</html>
