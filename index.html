@@ -573,7 +573,7 @@ async function loadAll(){
   try {
     var results = await Promise.all([apiGet('process'),apiGet('pool')]);
     var p = results[0], l = results[1];
-    processList = p.map(function(r){return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:r['면접일정']||'',resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:r['입사날짜']||'',date:r['등록일']||''};});
+    processList = p.map(function(r){return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:r['면접일정']||'',resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:r['입사날짜']||'',email:r['이메일']||'',date:r['등록일']||''};});
     poolList = l.map(function(r){return {id:String(r['ID']),name:r['이름']||'',role:r['직군']||'',skills:r['스킬태그']?String(r['스킬태그']).split(',').map(function(s){return s.trim();}).filter(Boolean):[],strength:r['강점']||'',weakness:r['약점']||'',salary:r['연봉수준']||'',position:r['역할']||'',grade:r['인재등급']||'',src:r['소싱채널']||'',status:r['상태']||'active',recontact:r['재접촉']||'N',resume:r['이력서링크']||'',memo:r['메모']||'',linkedin:r['LinkedIn']||'',date:r['등록일']||''};});
     
     
@@ -847,6 +847,7 @@ function openDetail(type,id){
     html+='<div><label class="flabel" style="font-size:11px;color:var(--text2);margin-bottom:5px;display:block">평가 메모</label><textarea class="comment-box" id="eval-memo" style="min-height:60px">'+(c.imemo||'')+'</textarea><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveEvalMemo(\''+id+'\')">메모 저장</button></div></div>';
     html+='</div>';
     html+='<div class="dsec" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px"><div class="dsec-label" style="margin-bottom:10px">✉️ 이메일 발송</div>'+
+      '<div style="display:flex;gap:6px;margin-bottom:10px"><input type="email" class="dsel" id="send-email-addr" value="'+(c.email||'')+'" placeholder="수신자 이메일 입력" style="flex:1"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px;flex-shrink:0" onclick="saveEmailAddr(\''+id+'\')">저장</button></div>'+
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
         emailTemplates.map(function(t){
           return '<button class="btn" style="font-size:12px;text-align:left;justify-content:flex-start" onclick="sendEmail(\''+id+'\',\''+t.id+'\')">'+t.name+'</button>';
@@ -904,7 +905,7 @@ function openDetail(type,id){
 }
 
 async function updateField(type,id,field,val){
-  var fieldMap={'stage':'전형단계','idate':'면접일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그','confirmed':'입사확정','joindate':'입사날짜'};
+  var fieldMap={'stage':'전형단계','idate':'면접일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그','confirmed':'입사확정','joindate':'입사날짜','email':'이메일'};
   var data={'ID':id};
   data[fieldMap[field]||field]=val;
   showLoading('저장 중...');
@@ -1278,21 +1279,30 @@ function resetTemplate(i){
   renderEmailTemplates();
 }
 
+async function saveEmailAddr(id){
+  var val=document.getElementById('send-email-addr').value.trim();
+  showLoading('저장 중...');
+  await apiPost('update','process',{'ID':id,'이메일':val});
+  await loadAll();
+  openDetail('process',id);
+}
+
 function sendEmail(candidateId, templateId){
   var c=processList.find(function(x){return String(x.id)===String(candidateId);});
   if(!c)return;
   var t=emailTemplates.find(function(x){return x.id===templateId;});
   if(!t)return;
+  var emailAddr=document.getElementById('send-email-addr')?document.getElementById('send-email-addr').value.trim():(c.email||'');
   var subject=t.subject.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'');
   var body=t.body.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'');
-  var mailto='mailto:?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  var mailto='mailto:'+emailAddr+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   window.open(mailto);
-  // Activity Log에 자동 기록
+  // Activity Log 자동 기록
   var logs=[];
   try{if(c.log)logs=JSON.parse(c.log);}catch(e){}
   var now=new Date();
   var dateStr=now.getFullYear()+'.'+(now.getMonth()+1).toString().padStart(2,'0')+'.'+now.getDate().toString().padStart(2,'0')+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  logs.unshift({date:dateStr,text:'📧 '+t.name+' 메일 발송'});
+  logs.unshift({date:dateStr,text:'📧 '+t.name+' 메일 발송 → '+emailAddr});
   apiPost('update','process',{'ID':candidateId,'활동로그':JSON.stringify(logs)}).then(function(){loadAll();openDetail('process',candidateId);});
 }
 
