@@ -1260,6 +1260,7 @@ function renderEmailTemplates(){
       '<div class="fgroup"><label class="flabel">제목</label><input class="finput" id="et-subject-'+i+'" value="'+t.subject.replace(/"/g,"&quot;")+'"></div>'+
       '<div class="fgroup"><label class="flabel">내용 <span style="font-size:10px;color:var(--text3);font-weight:400">{이름}, {입사날짜} 자동 치환</span></label>'+
         '<textarea class="finput" id="et-body-'+i+'" style="min-height:140px">'+t.body+'</textarea>'+
+      '<div style="font-size:11px;color:var(--text3);margin-top:6px">💡 자동 치환: {이름} · {포지션} · {입사날짜}</div>'
       '</div>'+
     '</div>';
   }).join('');
@@ -1293,8 +1294,8 @@ function sendEmail(candidateId, templateId){
   var t=emailTemplates.find(function(x){return x.id===templateId;});
   if(!t)return;
   var emailAddr=document.getElementById('send-email-addr')?document.getElementById('send-email-addr').value.trim():(c.email||'');
-  var subject=t.subject.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'');
-  var body=t.body.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'');
+  var subject=t.subject.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'').replace(/\{포지션\}/g,c.pos||'');
+  var body=t.body.replace(/\{이름\}/g,c.name).replace(/\{입사날짜\}/g,c.joindate||'').replace(/\{포지션\}/g,c.pos||'');
   var mailto='mailto:'+emailAddr+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   window.open(mailto);
   // Activity Log 자동 기록
