@@ -816,10 +816,11 @@ function openDetail(type,id){
   var srcSelect='<select class="dsel" onchange="updateField(\''+type+'\',\''+id+'\',\'src\',this.value)">'+srcOptions.map(function(s){return '<option'+(c.src===s?' selected':'')+'>'+s+'</option>';}).join('')+'</select>';
   var html='';
   if(type==='process'){
+    html+='<div style="display:flex;justify-content:flex-end;margin-bottom:16px"><button class="btn btn-dark" style="font-size:13px;padding:8px 18px" onclick="saveAllFields(\'process\',\''+id+'\')">💾 저장</button></div>';
     html+='<div class="dsec"><div class="dsec-label">전형 단계</div><select class="dsel" onchange="updateField(\'process\',\''+id+'\',\'stage\',this.value)">'+STAGES.map(function(s){return '<option value="'+s+'"'+(c.stage===s?' selected':'')+'>'+(STAGE_LABELS[s]||s)+'</option>';}).join('')+'</select></div>';
     html+='<div class="dsec"><div class="dsec-label">소싱채널</div>'+srcSelect+'</div>';
-    html+='<div class="dsec"><div class="dsec-label">면접 일정</div><input type="date" class="dsel" value="'+(c.idate||'')+'" onchange="updateField(\'process\',\''+id+'\',\'idate\',this.value)"></div>';
-    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1"></div><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'process\',\''+id+'\',\'resume\')">'+(c.resume?'링크 수정':'링크 저장')+'</button>'+(c.resume?' &nbsp;<a class="resume-link" href="'+c.resume+'" target="_blank">보기</a>':'')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">면접 일정</div><input type="date" class="dsel" id="detail-idate" value="'+(c.idate||'')+'"></div>';
+    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1">'+(c.resume?'<a class="resume-link" href="'+c.resume+'" target="_blank" style="flex-shrink:0">보기</a>':'')+'</div></div>';
     html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
     html+='<div class="dsec"><div class="dsec-label">코멘트</div><textarea class="comment-box" id="detail-comment" oninput="autoSave(\'process\',\''+id+'\',\'comment\',this.value)">'+(c.comment||'')+'</textarea><div style="font-size:11px;color:var(--text3);margin-top:4px" id="comment-save-status">자동 저장됩니다</div></div>';
 
@@ -883,16 +884,17 @@ function openDetail(type,id){
     html+='<div style="font-size:11px;color:var(--text);margin-top:8px">💡 이메일 발송 시 Log에 자동으로 반영됩니다.</div>';
     html+='</div>';
   } else {
-    html+='<div class="dsec"><div class="dsec-label">상태</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'status\',this.value)"><option value="서류검토"'+(c.status==='서류 검토'?' selected':'')+'>서류검토</option><option value="1차인터뷰"'+(c.status==='1차인터뷰'?' selected':'')+'>1차 인터뷰</option><option value="2차인터뷰"'+(c.status==='2차인터뷰'?' selected':'')+'>2차 인터뷰</option><option value="보류"'+(c.status==='보류'?' selected':'')+'>보류</option><option value="채용불가"'+(c.status==='채용불가'?' selected':'')+'>채용 불가</option></select></div>';
+    html+='<div style="display:flex;justify-content:flex-end;margin-bottom:16px"><button class="btn btn-dark" style="font-size:13px;padding:8px 18px" onclick="saveAllFields(\'pool\',\''+id+'\')">💾 저장</button></div>';
+    html+='<div class="dsec"><div class="dsec-label">상태</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'status\',this.value)"><option value="서류 검토"'+(c.status==='서류 검토'?' selected':'')+'>서류 검토</option><option value="1차인터뷰"'+(c.status==='1차인터뷰'?' selected':'')+'>1차 인터뷰</option><option value="2차인터뷰"'+(c.status==='2차인터뷰'?' selected':'')+'>2차 인터뷰</option><option value="보류"'+(c.status==='보류'?' selected':'')+'>보류</option><option value="채용불가"'+(c.status==='채용불가'?' selected':'')+'>채용 불가</option></select></div>';
     html+='<div class="dsec"><div class="dsec-label">인재등급</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'grade\',this.value)"><option value=""'+(c.grade===''?' selected':'')+'>선택</option><option value="S"'+(c.grade==='S'?' selected':'')+'>S</option><option value="A"'+(c.grade==='A'?' selected':'')+'>A</option><option value="B"'+(c.grade==='B'?' selected':'')+'>B</option><option value="C"'+(c.grade==='C'?' selected':'')+'>C</option><option value="D"'+(c.grade==='D'?' selected':'')+'>D</option></select></div>';
     html+='<div class="dsec"><div class="dsec-label">소싱채널</div>'+srcSelect+'</div>';
     html+='<div class="dsec"><div class="dsec-label">스킬</div><div>'+c.skills.map(function(s){return '<span class="skill-pill">'+s+'</span>';}).join('')+'</div></div>';
-    html+='<div class="dsec"><div class="dsec-label">강점</div><input type="text" class="dsel" id="detail-strength" value="'+(c.strength||'')+'" placeholder="강점 입력"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'strength\',\'detail-strength\')">저장</button></div></div>';
-    html+='<div class="dsec"><div class="dsec-label">약점</div><input type="text" class="dsel" id="detail-weakness" value="'+(c.weakness||'')+'" placeholder="약점 입력"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'weakness\',\'detail-weakness\')">저장</button></div></div>';
-    html+='<div class="dsec"><div class="dsec-label">연봉수준</div><input type="text" class="dsel" id="detail-salary" value="'+(c.salary||'')+'" placeholder="예: 5000~6000만원"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'salary\',\'detail-salary\')">저장</button></div></div>';
-    html+='<div class="dsec"><div class="dsec-label">역할</div><input type="text" class="dsel" id="detail-position" value="'+(c.position||'')+'" placeholder="예: Individual Contributor"><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailCustom(\'pool\',\''+id+'\',\'position\',\'detail-position\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">강점</div><input type="text" class="dsel" id="detail-strength" value="'+(c.strength||'')+'" placeholder="강점 입력"></div>';
+    html+='<div class="dsec"><div class="dsec-label">약점</div><input type="text" class="dsel" id="detail-weakness" value="'+(c.weakness||'')+'" placeholder="약점 입력"></div>';
+    html+='<div class="dsec"><div class="dsec-label">연봉수준</div><input type="text" class="dsel" id="detail-salary" value="'+(c.salary||'')+'" placeholder="예: 5000~6000만원"></div>';
+    html+='<div class="dsec"><div class="dsec-label">역할</div><input type="text" class="dsel" id="detail-position" value="'+(c.position||'')+'" placeholder="예: Individual Contributor"></div>';
     html+='<div class="dsec"><div class="dsec-label">재접촉 여부</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'recontact\',this.value)"><option value="N"'+(c.recontact==='N'?' selected':'')+'>N</option><option value="Y"'+(c.recontact==='Y'?' selected':'')+'>Y</option></select></div>';
-    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1"></div><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'pool\',\''+id+'\',\'resume\')">'+(c.resume?'링크 수정':'링크 저장')+'</button>'+(c.resume?' &nbsp;<a class="resume-link" href="'+c.resume+'" target="_blank">보기</a>':'')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1">'+(c.resume?'<a class="resume-link" href="'+c.resume+'" target="_blank" style="flex-shrink:0">보기</a>':'')+'</div></div>';
     html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
     html+='<div class="dsec"><div class="dsec-label">메모</div><textarea class="comment-box" id="detail-comment" oninput="autoSave(\'pool\',\''+id+'\',\'memo\',this.value)">'+(c.memo||'')+'</textarea><div style="font-size:11px;color:var(--text3);margin-top:4px" id="comment-save-status">자동 저장됩니다</div></div>';
   }
@@ -1319,6 +1321,31 @@ function sendEmail(candidateId, templateId){
   var dateStr=now.getFullYear()+'.'+(now.getMonth()+1).toString().padStart(2,'0')+'.'+now.getDate().toString().padStart(2,'0')+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
   logs.unshift({date:dateStr,text:'📧 '+t.name+' 메일 발송 → '+emailAddr});
   apiPost('update','process',{'ID':candidateId,'활동로그':JSON.stringify(logs)}).then(function(){loadAll();openDetail('process',candidateId);});
+}
+
+async function saveAllFields(type, id){
+  showLoading('저장 중...');
+  var data={'ID':id};
+  if(type==='process'){
+    var idate=document.getElementById('detail-idate');
+    var resume=document.getElementById('detail-resume');
+    if(idate) data['면접 일정']=idate.value;
+    if(resume) data['이력서링크']=resume.value;
+  } else {
+    var strength=document.getElementById('detail-strength');
+    var weakness=document.getElementById('detail-weakness');
+    var salary=document.getElementById('detail-salary');
+    var position=document.getElementById('detail-position');
+    var resume=document.getElementById('detail-resume');
+    if(strength) data['강점']=strength.value;
+    if(weakness) data['약점']=weakness.value;
+    if(salary) data['연봉수준']=salary.value;
+    if(position) data['역할']=position.value;
+    if(resume) data['이력서링크']=resume.value;
+  }
+  await apiPost('update',type,data);
+  await loadAll();
+  openDetail(type,id);
 }
 
 var autoSaveTimer=null;
