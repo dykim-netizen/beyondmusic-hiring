@@ -269,6 +269,9 @@ textarea.finput{resize:vertical;min-height:72px}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="text" id="proc-search" placeholder="이름, 포지션 검색..." oninput="renderProcess()">
         </div>
+        <select class="fsel" id="proc-pos" onchange="renderProcess()">
+          <option value="">포지션 전체</option>
+        </select>
         <select class="fsel" id="proc-stage" onchange="renderProcess()">
           <option value="">전형 단계 전체</option>
           <option>서류검토</option><option>서류탈락</option><option>1차 인터뷰</option><option>레퍼런스 체크</option><option>2차 인터뷰</option><option>최종 합격</option><option>불합격</option>
@@ -674,12 +677,20 @@ function renderKanban(){
   });
 }
 
+function renderProcPosFilter(){
+  var sel=document.getElementById('proc-pos');
+  if(!sel)return;
+  var poss=[...new Set(processList.map(function(c){return c.pos;}).filter(Boolean))];
+  sel.innerHTML='<option value="">포지션 전체</option>'+poss.map(function(p){return '<option value="'+p+'">'+p+'</option>';}).join('');
+}
+
 function renderProcess(){
   var q=(document.getElementById('proc-search').value||'').toLowerCase();
   var sf=document.getElementById('proc-stage').value;
   var srcf=document.getElementById('proc-src').value;
+  var posf=document.getElementById('proc-pos')?document.getElementById('proc-pos').value:'';
   var rows=processList.filter(function(c){
-    return (!q||c.name.toLowerCase().includes(q)||c.pos.toLowerCase().includes(q))&&(!sf||c.stage===sf)&&(!srcf||c.src===srcf);
+    return (!q||c.name.toLowerCase().includes(q)||c.pos.toLowerCase().includes(q))&&(!sf||c.stage===sf)&&(!srcf||c.src===srcf)&&(!posf||c.pos===posf);
   });
   document.getElementById('proc-tbody').innerHTML=rows.map(function(c){
     var dateStr=c.date?c.date.toString().substring(0,10):'—';
@@ -733,7 +744,7 @@ function showView(v,el){
   document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
   el.classList.add('active');
   ['kanban','process','pool','email'].forEach(function(k){document.getElementById('view-'+k).style.display=k===v?'block':'none';});
-  if(v==='process')renderProcess();
+  if(v==='process'){renderProcPosFilter();renderProcess();}
   if(v==='pool'){renderSkillChips();renderPool();}
   if(v==='email'){renderEmailTemplates();}
 }
@@ -1379,7 +1390,7 @@ function toggleGrade(){
   else{panel.style.display='none';arrow.textContent='▼';}
 }
 
-function renderAll(){renderStats();renderPosFilter();renderKanban();renderProcess();renderPool();}
+function renderAll(){renderStats();renderPosFilter();renderKanban();renderProcPosFilter();renderProcess();renderPool();}
 document.getElementById('add-modal').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal();});
 
 loadAll();
