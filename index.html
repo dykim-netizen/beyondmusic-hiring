@@ -573,7 +573,19 @@ async function loadAll(){
   try {
     var results = await Promise.all([apiGet('process'),apiGet('pool')]);
     var p = results[0], l = results[1];
-    processList = p.map(function(r){return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:r['면접일정']||'',resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:r['입사날짜']||'',email:r['이메일']||'',date:r['등록일']||''};});
+    processList = p.map(function(r){
+      var idateRaw=r['면접일정']||r['면접 일정']||'';
+      var idate='';
+      if(idateRaw){
+        var d=new Date(idateRaw);
+        if(!isNaN(d.getTime())){
+          idate=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        } else {
+          idate=String(idateRaw).substring(0,10);
+        }
+      }
+      return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:idate,resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:r['입사날짜']||'',email:r['이메일']||'',date:r['등록일']||''};
+    });
     poolList = l.map(function(r){return {id:String(r['ID']),name:r['이름']||'',role:r['직군']||'',skills:r['스킬태그']?String(r['스킬태그']).split(',').map(function(s){return s.trim();}).filter(Boolean):[],strength:r['강점']||'',weakness:r['약점']||'',salary:r['연봉수준']||'',position:r['역할']||'',grade:r['인재등급']||'',src:r['소싱채널']||'',status:r['상태']||'active',recontact:r['재접촉']||'N',resume:r['이력서링크']||'',memo:r['메모']||'',linkedin:r['LinkedIn']||'',date:r['등록일']||''};});
     
     
@@ -809,7 +821,7 @@ function openDetail(type,id){
     html+='<div class="dsec"><div class="dsec-label">면접 일정</div><input type="date" class="dsel" value="'+(c.idate||'')+'" onchange="updateField(\'process\',\''+id+'\',\'idate\',this.value)"></div>';
     html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1"></div><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'process\',\''+id+'\',\'resume\')">'+(c.resume?'링크 수정':'링크 저장')+'</button>'+(c.resume?' &nbsp;<a class="resume-link" href="'+c.resume+'" target="_blank">보기</a>':'')+'</div></div>';
     html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
-    html+='<div class="dsec"><div class="dsec-label">코멘트</div><textarea class="comment-box" id="detail-comment">'+(c.comment||'')+'</textarea><div class="save-row"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'process\',\''+id+'\',\'comment\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">코멘트</div><textarea class="comment-box" id="detail-comment" oninput="autoSave(\'process\',\''+id+'\',\'comment\',this.value)">'+(c.comment||'')+'</textarea><div style="font-size:11px;color:var(--text3);margin-top:4px" id="comment-save-status">자동 저장됩니다</div></div>';
 
     // 인터뷰 평가
     html+='<div class="dsec" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px">';
@@ -882,7 +894,7 @@ function openDetail(type,id){
     html+='<div class="dsec"><div class="dsec-label">재접촉 여부</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'recontact\',this.value)"><option value="N"'+(c.recontact==='N'?' selected':'')+'>N</option><option value="Y"'+(c.recontact==='Y'?' selected':'')+'>Y</option></select></div>';
     html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1"></div><div class="save-row" style="margin-top:6px"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'pool\',\''+id+'\',\'resume\')">'+(c.resume?'링크 수정':'링크 저장')+'</button>'+(c.resume?' &nbsp;<a class="resume-link" href="'+c.resume+'" target="_blank">보기</a>':'')+'</div></div>';
     html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
-    html+='<div class="dsec"><div class="dsec-label">메모</div><textarea class="comment-box" id="detail-comment">'+(c.memo||'')+'</textarea><div class="save-row"><button class="btn btn-dark" style="font-size:12px;padding:6px 12px" onclick="saveDetailField(\'pool\',\''+id+'\',\'memo\')">저장</button></div></div>';
+    html+='<div class="dsec"><div class="dsec-label">메모</div><textarea class="comment-box" id="detail-comment" oninput="autoSave(\'pool\',\''+id+'\',\'memo\',this.value)">'+(c.memo||'')+'</textarea><div style="font-size:11px;color:var(--text3);margin-top:4px" id="comment-save-status">자동 저장됩니다</div></div>';
   }
   html+='<div class="dsec"><div class="dsec-label">등록일</div><span style="font-size:13px;color:var(--text2);">'+c.date+'</span></div>';
 
@@ -907,7 +919,7 @@ function openDetail(type,id){
 }
 
 async function updateField(type,id,field,val){
-  var fieldMap={'stage':'전형단계','idate':'면접일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그','confirmed':'입사확정','joindate':'입사날짜','email':'이메일'};
+  var fieldMap={'stage':'전형단계','idate':'면접 일정','status':'상태','recontact':'재접촉','comment':'코멘트','memo':'메모','resume':'이력서링크','grade':'인재등급','strength':'강점','weakness':'약점','salary':'연봉수준','position':'역할','src':'소싱채널','log':'활동로그','confirmed':'입사확정','joindate':'입사날짜','email':'이메일'};
   var data={'ID':id};
   data[fieldMap[field]||field]=val;
   showLoading('저장 중...');
@@ -1307,6 +1319,25 @@ function sendEmail(candidateId, templateId){
   var dateStr=now.getFullYear()+'.'+(now.getMonth()+1).toString().padStart(2,'0')+'.'+now.getDate().toString().padStart(2,'0')+' '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
   logs.unshift({date:dateStr,text:'📧 '+t.name+' 메일 발송 → '+emailAddr});
   apiPost('update','process',{'ID':candidateId,'활동로그':JSON.stringify(logs)}).then(function(){loadAll();openDetail('process',candidateId);});
+}
+
+var autoSaveTimer=null;
+function autoSave(type,id,field,val){
+  var statusEl=document.getElementById('comment-save-status');
+  if(statusEl)statusEl.textContent='입력 중...';
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer=setTimeout(async function(){
+    if(statusEl)statusEl.textContent='저장 중...';
+    var fieldMap2={'comment':'코멘트','memo':'메모'};
+    var data={'ID':id};
+    data[fieldMap2[field]||field]=val;
+    await apiPost('update',type,data);
+    var list=type==='process'?processList:poolList;
+    var c=list.find(function(x){return String(x.id)===String(id);});
+    if(c){if(field==='comment')c.comment=val;else c.memo=val;}
+    if(statusEl)statusEl.textContent='✓ 저장됨';
+    setTimeout(function(){if(statusEl)statusEl.textContent='자동 저장됩니다';},2000);
+  },1500);
 }
 
 function toggleGrade(){
