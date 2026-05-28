@@ -888,7 +888,8 @@ function openDetail(type,id){
     html+='<div class="dsec"><div class="dsec-label">상태</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'status\',this.value)"><option value="서류 검토"'+(c.status==='서류 검토'?' selected':'')+'>서류 검토</option><option value="1차인터뷰"'+(c.status==='1차인터뷰'?' selected':'')+'>1차 인터뷰</option><option value="2차인터뷰"'+(c.status==='2차인터뷰'?' selected':'')+'>2차 인터뷰</option><option value="보류"'+(c.status==='보류'?' selected':'')+'>보류</option><option value="채용불가"'+(c.status==='채용불가'?' selected':'')+'>채용 불가</option></select></div>';
     html+='<div class="dsec"><div class="dsec-label">인재등급</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'grade\',this.value)"><option value=""'+(c.grade===''?' selected':'')+'>선택</option><option value="S"'+(c.grade==='S'?' selected':'')+'>S</option><option value="A"'+(c.grade==='A'?' selected':'')+'>A</option><option value="B"'+(c.grade==='B'?' selected':'')+'>B</option><option value="C"'+(c.grade==='C'?' selected':'')+'>C</option><option value="D"'+(c.grade==='D'?' selected':'')+'>D</option></select></div>';
     html+='<div class="dsec"><div class="dsec-label">소싱채널</div>'+srcSelect+'</div>';
-    html+='<div class="dsec"><div class="dsec-label">스킬</div><div>'+c.skills.map(function(s){return '<span class="skill-pill">'+s+'</span>';}).join('')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">직군</div><input type="text" class="dsel" id="detail-role" value="'+(c.role||'')+'" placeholder="직군 입력"></div>';
+    html+='<div class="dsec"><div class="dsec-label">스킬 태그 <span style="font-size:10px;font-weight:400;color:var(--text3)">(쉼표 구분)</span></div><input type="text" class="dsel" id="detail-skills" value="'+(c.skills.join(', '))+'" placeholder="마케팅, B2B, 영어, 기획"></div>';
     html+='<div class="dsec"><div class="dsec-label">강점</div><input type="text" class="dsel" id="detail-strength" value="'+(c.strength||'')+'" placeholder="강점 입력"></div>';
     html+='<div class="dsec"><div class="dsec-label">약점</div><input type="text" class="dsel" id="detail-weakness" value="'+(c.weakness||'')+'" placeholder="약점 입력"></div>';
     html+='<div class="dsec"><div class="dsec-label">연봉수준</div><input type="text" class="dsel" id="detail-salary" value="'+(c.salary||'')+'" placeholder="예: 5000~6000만원"></div>';
@@ -1332,11 +1333,15 @@ async function saveAllFields(type, id){
     if(idate) data['면접 일정']=idate.value;
     if(resume) data['이력서링크']=resume.value;
   } else {
+    var role=document.getElementById('detail-role');
+    var skills=document.getElementById('detail-skills');
     var strength=document.getElementById('detail-strength');
     var weakness=document.getElementById('detail-weakness');
     var salary=document.getElementById('detail-salary');
     var position=document.getElementById('detail-position');
     var resume=document.getElementById('detail-resume');
+    if(role) data['직군']=role.value;
+    if(skills) data['스킬태그']=skills.value.split(',').map(function(s){return s.trim();}).filter(Boolean).join(',');
     if(strength) data['강점']=strength.value;
     if(weakness) data['약점']=weakness.value;
     if(salary) data['연봉수준']=salary.value;
