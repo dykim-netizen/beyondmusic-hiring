@@ -1247,14 +1247,18 @@ async function toggleConfirm(id){
   var newVal=c.confirmed==='Y'?'N':'Y';
   showLoading('저장 중...');
   await apiPost('update','process',{'ID':id,'입사확정':newVal});
-  // 입사 확정 시 온보딩 DB에 자동 추가
   if(newVal==='Y'){
+    // 입사 확정 시 온보딩 DB에 추가
     await apiPost('add','onboarding',{
       '이름':c.name,'포지션':c.pos,
       '입사일':c.joindate||'','서베이발송':'N','서베이발송일':'','메모':''
     });
-    // 슬랙 알림
     sendSlackConfirmNotification(c.name, c.pos, c.joindate);
+    await loadOnboarding();
+  } else {
+    // 확정 취소 시 온보딩 DB에서 삭제
+    var ob=onboardingList.find(function(x){return x.name===c.name;});
+    if(ob) await apiPost('delete','onboarding',{'ID':ob.id});
     await loadOnboarding();
   }
   await loadAll();
@@ -1441,11 +1445,23 @@ const SURVEY_LINK = 'https://dykim-netizen.github.io/onboarding.survey/';
 async function loadOnboarding(){
   try{
     var j=await apiGet('onboarding');
-    onboardingList=j.map(function(r){return {
-      id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',
-      joindate:r['입사일']||'',surveySent:r['서베이발송']||'N',
-      sentDate:r['서베이발송일']||'',memo:r['메모']||''
-    };});
+    onboardingList=j.map(function(r){
+      var joindateRaw=r['입사일']||'';
+      var joindate='';
+      if(joindateRaw){
+        var d=new Date(joindateRaw);
+        if(!isNaN(d.getTime())){
+          joindate=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+        } else {
+          joindate=String(joindateRaw).substring(0,10);
+        }
+      }
+      return {
+        id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',
+        joindate:joindate,surveySent:r['서베이발송']||'N',
+        sentDate:r['서베이발송일']||'',memo:r['메모']||''
+      };
+    });
     document.getElementById('nb-onboarding').textContent=onboardingList.length;
     renderOnboarding();
   }catch(e){}
@@ -1453,9 +1469,12 @@ async function loadOnboarding(){
 
 function calcDays(joindate){
   if(!joindate)return null;
+  // ISO 형식 또는 일반 날짜 모두 처리
   var d=new Date(joindate);
   if(isNaN(d.getTime()))return null;
   var now=new Date();
+  now.setHours(0,0,0,0);
+  d.setHours(0,0,0,0);
   return Math.floor((now-d)/(1000*60*60*24));
 }
 
@@ -1512,14 +1531,16 @@ function renderOnboarding(){
 }
 
 async function sendSurvey(id, name){
+  showLoading('슬랙 알림 발송 중...');
   var today=new Date();
   var dateStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
-  showLoading('저장 중...');
   await apiPost('update','onboarding',{'ID':id,'서베이발송':'Y','서베이발송일':dateStr});
+  // 슬랙 알림
+  var msg='📋 *3개월 서베이 발송 알림*\n*'+name+'*님의 입사 3개월이 되었습니다!\n아래 링크를 복사해서 발송해주세요 👇\nhttps://dykim-netizen.github.io/onboarding.survey/';
+  await apiPost('slack','notify',{message:msg});
   await loadOnboarding();
-  sendSlackSurveyNotification(name);
   hideLoading();
-  alert('슬랙 #채용 채널로 알림을 보냈어요!');
+  alert('✅ 슬랙 #채용 채널로 알림을 보냈어요!');
 }
 
 async function resetSurvey(id){
