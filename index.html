@@ -194,18 +194,26 @@ textarea.finput{resize:vertical;min-height:72px}
       </div>
     </div>
     <div class="nav-group">
-      <div class="nav-group-label">설정</div>
-      <div class="nav-item" onclick="showView('email',this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        이메일 템플릿
-      </div>
-    </div>
-    <div class="nav-group">
       <div class="nav-group-label">인재풀</div>
       <div class="nav-item" onclick="showView('pool',this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 11a4 4 0 0 1 0-8M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
         인재풀 전체
         <span class="nav-badge" id="nb-pool">0</span>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">온보딩</div>
+      <div class="nav-item" onclick="showView('onboarding',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        온보딩 관리
+        <span class="nav-badge" id="nb-onboarding">0</span>
+      </div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">설정</div>
+      <div class="nav-item" onclick="showView('email',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        이메일 템플릿
       </div>
     </div>
   </nav>
@@ -216,6 +224,30 @@ textarea.finput{resize:vertical;min-height:72px}
 
 <!-- Main -->
 <main class="main">
+
+  <!-- 온보딩 뷰 -->
+  <div id="view-onboarding" style="display:none">
+    <div class="page-top">
+      <div class="page-heading">
+        <div class="page-title">온보딩 관리</div>
+        <div class="page-sub">입사 확정 직원 온보딩 및 3개월 서베이 관리</div>
+      </div>
+    </div>
+    <div class="pool-wrap">
+      <div id="onboarding-alert" style="display:none;margin-bottom:16px;padding:14px 18px;background:#faebd4;border:1px solid #e8a838;border-radius:var(--r-lg)">
+        <div style="font-size:13px;font-weight:600;color:#7a4a08;margin-bottom:6px">🔔 서베이 발송 필요</div>
+        <div id="onboarding-alert-list" style="font-size:12px;color:#7a4a08"></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>이름</th><th>포지션</th><th>입사일</th><th>3개월 도래</th><th>서베이 발송</th><th>발송일</th><th>메모</th>
+          </tr></thead>
+          <tbody id="onboarding-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
   <!-- 이메일 템플릿 뷰 -->
   <div id="view-email" style="display:none">
@@ -550,7 +582,7 @@ const STAGES = ['서류검토','서류탈락','1차 인터뷰','레퍼런스 체
 const STAGE_LABELS = {'서류검토':'서류검토 (보류)','서류탈락':'서류탈락','1차 인터뷰':'1차 인터뷰','레퍼런스 체크':'레퍼런스 체크','2차 인터뷰':'2차 인터뷰','최종 합격':'최종 합격','불합격':'불합격'};
 const STAGE_COLORS = {'서류검토':'#888780','서류탈락':'#c0392b','1차 인터뷰':'#378ADD','레퍼런스 체크':'#0F6E56','2차 인터뷰':'#534AB7','최종 합격':'#1D9E75','불합격':'#993c1d'};
 const SRC_CLASS = {'사람인':'tag-saramin','잡코리아':'tag-jobkorea','리멤버':'tag-remember','헤드헌터':'tag-headhunter','지인소개':'tag-rec','기타':'tag-gray'};
-const API = 'https://script.google.com/macros/s/AKfycbx3qrWj9uwB4aZhyPcfS3L0uGFbXIbz09mJi66c7QCJw9zWGsi_Cx-gbdnADTkfyT8i/exec';
+const API = 'https://script.google.com/macros/s/AKfycbwh8cUTyxla3iklRp9pRknS6W9pupu-d04HZONUnAQbFTIDM3Qapj0h9p7kCJiXywQ/exec';
 const CLOUDINARY_CLOUD = 'dv0pgto0r';
 const CLOUDINARY_UPLOAD_PRESET = 'bm_resumes';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/auto/upload';
@@ -601,6 +633,7 @@ async function loadAll(){
   loadPositions();
   renderPositionSelect();
   loadEmailTemplates();
+  loadOnboarding();
 }
 
 function srcTag(s){return '<span class="tag '+(SRC_CLASS[s]||'tag-saramin')+'">'+s+'</span>';}
@@ -743,10 +776,11 @@ function renderPool(){
 function showView(v,el){
   document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
   el.classList.add('active');
-  ['kanban','process','pool','email'].forEach(function(k){document.getElementById('view-'+k).style.display=k===v?'block':'none';});
+  ['kanban','process','pool','email','onboarding'].forEach(function(k){document.getElementById('view-'+k).style.display=k===v?'block':'none';});
   if(v==='process'){renderProcPosFilter();renderProcess();}
   if(v==='pool'){renderSkillChips();renderPool();}
   if(v==='email'){renderEmailTemplates();}
+  if(v==='onboarding'){renderOnboarding();}
 }
 
 function openModal(tab){currentModalTab=tab;switchModalTab(tab);document.getElementById('add-modal').classList.add('open');}
@@ -1213,6 +1247,16 @@ async function toggleConfirm(id){
   var newVal=c.confirmed==='Y'?'N':'Y';
   showLoading('저장 중...');
   await apiPost('update','process',{'ID':id,'입사확정':newVal});
+  // 입사 확정 시 온보딩 DB에 자동 추가
+  if(newVal==='Y'){
+    await apiPost('add','onboarding',{
+      '이름':c.name,'포지션':c.pos,
+      '입사일':c.joindate||'','서베이발송':'N','서베이발송일':'','메모':''
+    });
+    // 슬랙 알림
+    sendSlackConfirmNotification(c.name, c.pos, c.joindate);
+    await loadOnboarding();
+  }
   await loadAll();
   openDetail('process',id);
 }
@@ -1381,6 +1425,117 @@ function autoSave(type,id,field,val){
     if(statusEl)statusEl.textContent='✓ 저장됨';
     setTimeout(function(){if(statusEl)statusEl.textContent='자동 저장됩니다';},2000);
   },1500);
+}
+
+// 온보딩
+let onboardingList = [];
+const SURVEY_LINK = 'https://dykim-netizen.github.io/onboarding.survey/';
+
+async function loadOnboarding(){
+  try{
+    var j=await apiGet('onboarding');
+    onboardingList=j.map(function(r){return {
+      id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',
+      joindate:r['입사일']||'',surveySent:r['서베이발송']||'N',
+      sentDate:r['서베이발송일']||'',memo:r['메모']||''
+    };});
+    document.getElementById('nb-onboarding').textContent=onboardingList.length;
+    renderOnboarding();
+  }catch(e){}
+}
+
+function calcDays(joindate){
+  if(!joindate)return null;
+  var d=new Date(joindate);
+  if(isNaN(d.getTime()))return null;
+  var now=new Date();
+  return Math.floor((now-d)/(1000*60*60*24));
+}
+
+function renderOnboarding(){
+  var tbody=document.getElementById('onboarding-tbody');
+  var alertList=document.getElementById('onboarding-alert-list');
+  var alertBox=document.getElementById('onboarding-alert');
+  if(!tbody)return;
+
+  var alerts=[];
+  tbody.innerHTML=onboardingList.map(function(o){
+    var days=calcDays(o.joindate);
+    var survey3m=null;
+    if(o.joindate){
+      var d=new Date(o.joindate);
+      d.setDate(d.getDate()+90);
+      survey3m=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    }
+    var daysLeft=days!==null?90-days:null;
+    var statusHtml='';
+    if(days!==null){
+      if(daysLeft<=0&&o.surveySent==='N'){
+        statusHtml='<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#fae8e2;color:#8c3318">⚠️ 발송 필요</span>';
+        alerts.push(o.name+'님 ('+Math.abs(daysLeft)+'일 경과)');
+      } else if(daysLeft<=7&&daysLeft>0&&o.surveySent==='N'){
+        statusHtml='<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#faebd4;color:#7a4a08">D-'+daysLeft+'</span>';
+        alerts.push(o.name+'님 (D-'+daysLeft+')');
+      } else if(o.surveySent==='Y'){
+        statusHtml='<span style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:#ddf2e8;color:#0a6644">✅ 발송완료</span>';
+      } else {
+        statusHtml='<span style="font-size:11px;color:var(--text3)">D-'+daysLeft+'</span>';
+      }
+    }
+    return '<tr>'+
+      '<td><strong>'+o.name+'</strong></td>'+
+      '<td style="color:var(--text2)">'+o.pos+'</td>'+
+      '<td style="font-size:12px">'+o.joindate+'</td>'+
+      '<td style="font-size:12px">'+(survey3m||'—')+'</td>'+
+      '<td>'+statusHtml+'</td>'+
+      '<td style="font-size:12px;color:var(--text2)">'+(o.sentDate||'—')+'</td>'+
+      '<td><div style="display:flex;gap:6px;align-items:center">'+
+        (o.surveySent==='N'?'<button class="btn btn-dark" style="font-size:11px;padding:4px 10px" onclick="sendSurvey(\''+o.id+'\',\''+o.name+'\')">서베이 발송</button>':'<button class="btn" style="font-size:11px;padding:4px 10px" onclick="resetSurvey(\''+o.id+'\')">재발송</button>')+
+      '</div></td>'+
+    '</tr>';
+  }).join('');
+
+  if(alerts.length>0){
+    alertBox.style.display='block';
+    alertList.innerHTML=alerts.map(function(a){return '• '+a;}).join('<br>');
+  } else {
+    alertBox.style.display='none';
+  }
+}
+
+async function sendSurvey(id, name){
+  var surveyUrl=SURVEY_LINK+'?name='+encodeURIComponent(name);
+  window.open(surveyUrl);
+  var today=new Date();
+  var dateStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  showLoading('저장 중...');
+  await apiPost('update','onboarding',{'ID':id,'서베이발송':'Y','서베이발송일':dateStr});
+  await loadOnboarding();
+  // 슬랙 알림
+  sendSlackSurveyNotification(name);
+}
+
+async function resetSurvey(id){
+  if(!confirm('서베이를 재발송 처리하겠습니까?'))return;
+  var today=new Date();
+  var dateStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  showLoading('저장 중...');
+  await apiPost('update','onboarding',{'ID':id,'서베이발송':'Y','서베이발송일':dateStr});
+  await loadOnboarding();
+}
+
+function sendSlackConfirmNotification(name, pos, joindate){
+  try{
+    var msg='🎉 *입사 확정*\n*'+name+'*님이 *'+pos+'* 포지션으로 입사 확정되었습니다!\n입사일: '+(joindate||'미정')+'\n3개월 서베이 발송 예정일을 확인해주세요.';
+    apiPost('slack','notify',{message:msg,channel:'#채용'});
+  }catch(e){}
+}
+
+function sendSlackSurveyNotification(name){
+  try{
+    var msg='📋 *3개월 서베이 발송*\n*'+name+'*님께 온보딩 서베이가 발송되었습니다.';
+    apiPost('slack','notify',{message:msg,channel:'#채용'});
+  }catch(e){}
 }
 
 function toggleGrade(){
