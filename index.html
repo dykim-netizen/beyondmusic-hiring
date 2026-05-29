@@ -241,7 +241,7 @@ textarea.finput{resize:vertical;min-height:72px}
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>이름</th><th>포지션</th><th>입사일</th><th>3개월 도래</th><th>서베이 발송</th><th>발송일</th><th>메모</th>
+            <th>이름</th><th>포지션</th><th>입사일</th><th>3개월 도래일</th><th>D-day</th><th>서베이 발송</th><th>발송일</th>
           </tr></thead>
           <tbody id="onboarding-tbody"></tbody>
         </table>
@@ -582,7 +582,7 @@ const STAGES = ['서류검토','서류탈락','1차 인터뷰','레퍼런스 체
 const STAGE_LABELS = {'서류검토':'서류검토 (보류)','서류탈락':'서류탈락','1차 인터뷰':'1차 인터뷰','레퍼런스 체크':'레퍼런스 체크','2차 인터뷰':'2차 인터뷰','최종 합격':'최종 합격','불합격':'불합격'};
 const STAGE_COLORS = {'서류검토':'#888780','서류탈락':'#c0392b','1차 인터뷰':'#378ADD','레퍼런스 체크':'#0F6E56','2차 인터뷰':'#534AB7','최종 합격':'#1D9E75','불합격':'#993c1d'};
 const SRC_CLASS = {'사람인':'tag-saramin','잡코리아':'tag-jobkorea','리멤버':'tag-remember','헤드헌터':'tag-headhunter','지인소개':'tag-rec','기타':'tag-gray'};
-const API = 'https://script.google.com/macros/s/AKfycbwh8cUTyxla3iklRp9pRknS6W9pupu-d04HZONUnAQbFTIDM3Qapj0h9p7kCJiXywQ/exec';
+const API = 'https://script.google.com/macros/s/AKfycbyA6wq0VHFccYOWPaQdtGfb0PV0rxLAu6k_RcGgQrKc3ZGQ5rc52rg2tMwOi-USxDc/exec';
 const CLOUDINARY_CLOUD = 'dv0pgto0r';
 const CLOUDINARY_UPLOAD_PRESET = 'bm_resumes';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/auto/upload';
@@ -1266,8 +1266,15 @@ async function saveJoinDate(id){
   if(!val){alert('날짜를 선택해주세요');return;}
   showLoading('저장 중...');
   await apiPost('update','process',{'ID':id,'입사날짜':val});
-  await loadAll();
+  // processList 직접 업데이트 (패널 유지)
+  var c=processList.find(function(x){return String(x.id)===String(id);});
+  if(c) c.joindate=val;
+  hideLoading();
+  // 온보딩 DB에도 입사일 업데이트
+  var ob=onboardingList.find(function(x){return x.name===c.name;});
+  if(ob) await apiPost('update','onboarding',{'ID':ob.id,'입사일':val});
   openDetail('process',id);
+  await loadOnboarding();
 }
 
 async function addLog(id){
@@ -1485,13 +1492,14 @@ function renderOnboarding(){
     return '<tr>'+
       '<td><strong>'+o.name+'</strong></td>'+
       '<td style="color:var(--text2)">'+o.pos+'</td>'+
-      '<td style="font-size:12px">'+o.joindate+'</td>'+
+      '<td style="font-size:12px">'+(o.joindate||'—')+'</td>'+
       '<td style="font-size:12px">'+(survey3m||'—')+'</td>'+
       '<td>'+statusHtml+'</td>'+
+      '<td>'+(o.surveySent==='N'?
+        '<button class="btn btn-dark" style="font-size:11px;padding:4px 10px" onclick="sendSurvey(\''+o.id+'\',\''+o.name+'\')">발송</button>':
+        '<button class="btn" style="font-size:11px;padding:4px 10px" onclick="resetSurvey(\''+o.id+'\')">재발송</button>')+
+      '</td>'+
       '<td style="font-size:12px;color:var(--text2)">'+(o.sentDate||'—')+'</td>'+
-      '<td><div style="display:flex;gap:6px;align-items:center">'+
-        (o.surveySent==='N'?'<button class="btn btn-dark" style="font-size:11px;padding:4px 10px" onclick="sendSurvey(\''+o.id+'\',\''+o.name+'\')">서베이 발송</button>':'<button class="btn" style="font-size:11px;padding:4px 10px" onclick="resetSurvey(\''+o.id+'\')">재발송</button>')+
-      '</div></td>'+
     '</tr>';
   }).join('');
 
@@ -1504,15 +1512,14 @@ function renderOnboarding(){
 }
 
 async function sendSurvey(id, name){
-  var surveyUrl=SURVEY_LINK+'?name='+encodeURIComponent(name);
-  window.open(surveyUrl);
   var today=new Date();
   var dateStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
   showLoading('저장 중...');
   await apiPost('update','onboarding',{'ID':id,'서베이발송':'Y','서베이발송일':dateStr});
   await loadOnboarding();
-  // 슬랙 알림
   sendSlackSurveyNotification(name);
+  hideLoading();
+  alert('슬랙 #채용 채널로 알림을 보냈어요!');
 }
 
 async function resetSurvey(id){
@@ -1527,14 +1534,14 @@ async function resetSurvey(id){
 function sendSlackConfirmNotification(name, pos, joindate){
   try{
     var msg='🎉 *입사 확정*\n*'+name+'*님이 *'+pos+'* 포지션으로 입사 확정되었습니다!\n입사일: '+(joindate||'미정')+'\n3개월 서베이 발송 예정일을 확인해주세요.';
-    apiPost('slack','notify',{message:msg,channel:'#채용'});
+    fetch(API,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'slack',type:'notify',data:{message:msg}})});
   }catch(e){}
 }
 
 function sendSlackSurveyNotification(name){
   try{
-    var msg='📋 *3개월 서베이 발송*\n*'+name+'*님께 온보딩 서베이가 발송되었습니다.';
-    apiPost('slack','notify',{message:msg,channel:'#채용'});
+    var msg='📋 *3개월 서베이 발송 알림*\n*'+name+'*님의 입사 3개월이 되었습니다!\n아래 링크를 복사해서 발송해주세요 👇\n'+SURVEY_LINK;
+    fetch(API,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'slack',type:'notify',data:{message:msg}})});
   }catch(e){}
 }
 
