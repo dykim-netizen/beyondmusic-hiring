@@ -582,7 +582,7 @@ const STAGES = ['서류검토','서류탈락','1차 인터뷰','레퍼런스 체
 const STAGE_LABELS = {'서류검토':'서류검토 (보류)','서류탈락':'서류탈락','1차 인터뷰':'1차 인터뷰','레퍼런스 체크':'레퍼런스 체크','2차 인터뷰':'2차 인터뷰','최종 합격':'최종 합격','불합격':'불합격'};
 const STAGE_COLORS = {'서류검토':'#888780','서류탈락':'#c0392b','1차 인터뷰':'#378ADD','레퍼런스 체크':'#0F6E56','2차 인터뷰':'#534AB7','최종 합격':'#1D9E75','불합격':'#993c1d'};
 const SRC_CLASS = {'사람인':'tag-saramin','잡코리아':'tag-jobkorea','리멤버':'tag-remember','헤드헌터':'tag-headhunter','지인소개':'tag-rec','기타':'tag-gray'};
-const API = 'https://script.google.com/macros/s/AKfycbyA6wq0VHFccYOWPaQdtGfb0PV0rxLAu6k_RcGgQrKc3ZGQ5rc52rg2tMwOi-USxDc/exec';
+const API = 'https://script.google.com/macros/s/AKfycbyLZ9g4uP0GwHjjPIMei-l-GBsjhlhAKpyPU3n8Y1iV76rGSHoBukiNeDD_6_am4wo/exec';
 const CLOUDINARY_CLOUD = 'dv0pgto0r';
 const CLOUDINARY_UPLOAD_PRESET = 'bm_resumes';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/auto/upload';
@@ -865,7 +865,14 @@ function openDetail(type,id){
     html+='<div class="dsec"><div class="dsec-label">전형 단계</div><select class="dsel" onchange="updateField(\'process\',\''+id+'\',\'stage\',this.value)">'+STAGES.map(function(s){return '<option value="'+s+'"'+(c.stage===s?' selected':'')+'>'+(STAGE_LABELS[s]||s)+'</option>';}).join('')+'</select></div>';
     html+='<div class="dsec"><div class="dsec-label">소싱채널</div>'+srcSelect+'</div>';
     html+='<div class="dsec"><div class="dsec-label">면접 일정</div><input type="date" class="dsel" id="detail-idate" value="'+(c.idate||'')+'"></div>';
-    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1">'+(c.resume?'<a class="resume-link" href="'+c.resume+'" target="_blank" style="flex-shrink:0">보기</a>':'')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">이력서</div>'+
+      '<div class="file-drop" id="process-detail-drop" onclick="document.getElementById(\'process-detail-file\').click()" style="margin-bottom:8px">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 4px;display:block;width:18px;height:18px;stroke-width:1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'+
+        '<p id="process-detail-file-name" style="font-size:11px;color:var(--text2);margin:0">클릭하여 이력서 업로드 (PDF, DOC)</p>'+
+        '<input type="file" id="process-detail-file" accept=".pdf,.doc,.docx" onchange="handleDetailFile(\'process\',\''+id+'\')" style="display:none">'+
+      '</div>'+
+      '<div style="font-size:11px;color:var(--text3);margin-bottom:6px">또는 링크 직접 입력</div>'+
+      '<div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1">'+(c.resume?'<a class="resume-link" href="'+c.resume+'" target="_blank" style="flex-shrink:0">보기</a>':'')+'</div></div>';
     html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
     html+='<div class="dsec"><div class="dsec-label">코멘트</div><textarea class="comment-box" id="detail-comment" oninput="autoSave(\'process\',\''+id+'\',\'comment\',this.value)">'+(c.comment||'')+'</textarea><div style="font-size:11px;color:var(--text3);margin-top:4px" id="comment-save-status">자동 저장됩니다</div></div>';
 
@@ -940,7 +947,14 @@ function openDetail(type,id){
     html+='<div class="dsec"><div class="dsec-label">연봉수준</div><input type="text" class="dsel" id="detail-salary" value="'+(c.salary||'')+'" placeholder="예: 5000~6000만원"></div>';
     html+='<div class="dsec"><div class="dsec-label">역할</div><input type="text" class="dsel" id="detail-position" value="'+(c.position||'')+'" placeholder="예: Individual Contributor"></div>';
     html+='<div class="dsec"><div class="dsec-label">재접촉 여부</div><select class="dsel" onchange="updateField(\'pool\',\''+id+'\',\'recontact\',this.value)"><option value="N"'+(c.recontact==='N'?' selected':'')+'>N</option><option value="Y"'+(c.recontact==='Y'?' selected':'')+'>Y</option></select></div>';
-    html+='<div class="dsec"><div class="dsec-label">이력서 링크</div><div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1">'+(c.resume?'<a class="resume-link" href="'+c.resume+'" target="_blank" style="flex-shrink:0">보기</a>':'')+'</div></div>';
+    html+='<div class="dsec"><div class="dsec-label">이력서</div>'+
+      '<div class="file-drop" id="pool-detail-drop" onclick="document.getElementById(\'pool-detail-file\').click()" style="margin-bottom:8px">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin:0 auto 4px;display:block;width:18px;height:18px;stroke-width:1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'+
+        '<p id="pool-detail-file-name" style="font-size:11px;color:var(--text2);margin:0">클릭하여 이력서 업로드 (PDF, DOC)</p>'+
+        '<input type="file" id="pool-detail-file" accept=".pdf,.doc,.docx" onchange="handleDetailFile(\'pool\',\''+id+'\')" style="display:none">'+
+      '</div>'+
+      '<div style="font-size:11px;color:var(--text3);margin-bottom:6px">또는 링크 직접 입력</div>'+
+      '<div style="display:flex;gap:6px;align-items:center"><input type="text" class="dsel" id="detail-resume" value="'+(c.resume||'')+'" placeholder="구글 드라이브 링크" style="flex:1">'+(c.resume?'<a class="resume-link" href="'+c.resume+'" target="_blank" style="flex-shrink:0">보기</a>':'')+'</div></div>';
     html+='<div class="dsec"><div class="dsec-label">LinkedIn</div>'+(c.linkedin?'<a class="resume-link" href="'+c.linkedin+'" target="_blank" style="background:#E6F1FB;color:#185fa5">LinkedIn 프로필</a>':'<span style="font-size:13px;color:var(--text3)">없음</span>')+'</div>';
     html+='<div class="dsec"><div class="dsec-label">메모</div><textarea class="comment-box" id="detail-comment" oninput="autoSave(\'pool\',\''+id+'\',\'memo\',this.value)">'+(c.memo||'')+'</textarea><div style="font-size:11px;color:var(--text3);margin-top:4px" id="comment-save-status">자동 저장됩니다</div></div>';
   }
@@ -1269,16 +1283,21 @@ async function saveJoinDate(id){
   var val=document.getElementById('join-date').value;
   if(!val){alert('날짜를 선택해주세요');return;}
   showLoading('저장 중...');
+  // 후보자 DB 업데이트
   await apiPost('update','process',{'ID':id,'입사날짜':val});
-  // processList 직접 업데이트 (패널 유지)
+  // processList 직접 업데이트
   var c=processList.find(function(x){return String(x.id)===String(id);});
   if(c) c.joindate=val;
-  hideLoading();
   // 온보딩 DB에도 입사일 업데이트
   var ob=onboardingList.find(function(x){return x.name===c.name;});
-  if(ob) await apiPost('update','onboarding',{'ID':ob.id,'입사일':val});
+  if(ob){
+    await apiPost('update','onboarding',{'ID':ob.id,'입사일':val});
+    ob.joindate=val;
+  }
+  hideLoading();
+  // 패널 유지하면서 날짜만 반영
   openDetail('process',id);
-  await loadOnboarding();
+  renderOnboarding();
 }
 
 async function addLog(id){
@@ -1419,6 +1438,32 @@ async function saveAllFields(type, id){
   openDetail(type,id);
 }
 
+async function handleDetailFile(type, id){
+  var prefix=type==='process'?'process':'pool';
+  var fileInput=document.getElementById(prefix+'-detail-file');
+  var fileNameEl=document.getElementById(prefix+'-detail-file-name');
+  var dropEl=document.getElementById(prefix+'-detail-drop');
+  if(!fileInput||!fileInput.files[0])return;
+  var file=fileInput.files[0];
+  fileNameEl.textContent=file.name+' 업로드 중...';
+  dropEl.classList.add('has-file');
+  try{
+    var resumeLink=await uploadToCloudinary(file);
+    document.getElementById('detail-resume').value=resumeLink;
+    fileNameEl.textContent='✅ '+file.name;
+    showLoading('저장 중...');
+    await apiPost('update',type,{'ID':id,'이력서링크':resumeLink});
+    var list=type==='process'?processList:poolList;
+    var c=list.find(function(x){return String(x.id)===String(id);});
+    if(c) c.resume=resumeLink;
+    hideLoading();
+    alert('이력서가 업로드되었어요!');
+  }catch(e){
+    fileNameEl.textContent='업로드 실패. 링크를 직접 입력해주세요.';
+    dropEl.classList.remove('has-file');
+  }
+}
+
 var autoSaveTimer=null;
 function autoSave(type,id,field,val){
   var statusEl=document.getElementById('comment-save-status');
@@ -1445,6 +1490,7 @@ const SURVEY_LINK = 'https://dykim-netizen.github.io/onboarding.survey/';
 async function loadOnboarding(){
   try{
     var j=await apiGet('onboarding');
+    if(!Array.isArray(j)) return;
     onboardingList=j.map(function(r){
       var joindateRaw=r['입사일']||'';
       var joindate='';
@@ -1458,13 +1504,14 @@ async function loadOnboarding(){
       }
       return {
         id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',
-        joindate:joindate,surveySent:r['서베이발송']||'N',
+        joindate:joindate,surveySent:String(r['서베이발송']||'N'),
         sentDate:r['서베이발송일']||'',memo:r['메모']||''
       };
     });
-    document.getElementById('nb-onboarding').textContent=onboardingList.length;
+    var nbEl=document.getElementById('nb-onboarding');
+    if(nbEl) nbEl.textContent=onboardingList.length;
     renderOnboarding();
-  }catch(e){}
+  }catch(e){console.error('loadOnboarding error:',e);}
 }
 
 function addMonths(dateStr, months){
@@ -1480,6 +1527,12 @@ function renderOnboarding(){
   var alertList=document.getElementById('onboarding-alert-list');
   var alertBox=document.getElementById('onboarding-alert');
   if(!tbody)return;
+
+  if(onboardingList.length===0){
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--text3);font-size:13px">아직 입사 확정된 직원이 없어요</td></tr>';
+    if(alertBox) alertBox.style.display='none';
+    return;
+  }
 
   var alerts=[];
   tbody.innerHTML=onboardingList.map(function(o){
