@@ -619,7 +619,17 @@ async function loadAll(){
           idate=String(idateRaw).substring(0,10);
         }
       }
-      return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:idate,resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:r['입사날짜']||'',email:r['이메일']||'',date:r['등록일']||''};
+      var joindateRaw=r['입사날짜']||'';
+      var joindate='';
+      if(joindateRaw){
+        var jd=new Date(joindateRaw);
+        if(!isNaN(jd.getTime())){
+          joindate=jd.getFullYear()+'-'+String(jd.getMonth()+1).padStart(2,'0')+'-'+String(jd.getDate()).padStart(2,'0');
+        } else {
+          joindate=String(joindateRaw).substring(0,10);
+        }
+      }
+      return {id:String(r['ID']),name:r['이름']||'',pos:r['포지션']||'',src:r['소싱채널']||'',stage:r['전형단계']||'',idate:idate,resume:r['이력서링크']||'',comment:r['코멘트']||'',linkedin:r['LinkedIn']||'',log:r['활동로그']||'',itype:r['인터뷰유형']||'',s1:r['전문성']||'',s2:r['문제해결능력']||'',s3:r['셀프리더십']||'',s4:r['전략적사고']||'',s5:r['팀리딩']||'',s6:r['협업']||'',s7:r['CultureFit']||'',score:r['종합점수']||'',igrade:r['인터뷰등급']||'',imemo:r['평가메모']||'',confirmed:r['입사확정']||'',joindate:joindate,email:r['이메일']||'',date:r['등록일']||''};
     });
     poolList = l.map(function(r){return {id:String(r['ID']),name:r['이름']||'',role:r['직군']||'',skills:r['스킬태그']?String(r['스킬태그']).split(',').map(function(s){return s.trim();}).filter(Boolean):[],strength:r['강점']||'',weakness:r['약점']||'',salary:r['연봉수준']||'',position:r['역할']||'',grade:r['인재등급']||'',src:r['소싱채널']||'',status:r['상태']||'active',recontact:r['재접촉']||'N',resume:r['이력서링크']||'',memo:r['메모']||'',linkedin:r['LinkedIn']||'',date:r['등록일']||''};});
     
@@ -1512,6 +1522,16 @@ async function loadOnboarding(){
     if(nbEl) nbEl.textContent=onboardingList.length;
     renderOnboarding();
   }catch(e){console.error('loadOnboarding error:',e);}
+}
+
+function calcDays(joindate){
+  if(!joindate)return null;
+  var d=new Date(joindate);
+  if(isNaN(d.getTime()))return null;
+  var now=new Date();
+  now.setHours(0,0,0,0);
+  d.setHours(0,0,0,0);
+  return Math.floor((now-d)/(1000*60*60*24));
 }
 
 function addMonths(dateStr, months){
